@@ -58,7 +58,7 @@ namespace wimm.Secundatives
         {
             var interim = EqualityComparer<T>.Default.Equals(other._value);
 
-            return other._exists == _exists 
+            return other._exists == _exists
                 && EqualityComparer<T>.Default.Equals(_value, other._value);
         }
 
