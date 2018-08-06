@@ -127,6 +127,24 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
+        public void EqualsObject_SameObject_True()
+        {
+            var underTest = new Maybe<int>();
+            var other = underTest as object;
+
+            Assert.True(underTest.Equals(other));
+        }
+
+        [Fact]
+        public void EqualsObject_DifferentObject_False()
+        {
+            var underTest = new Maybe<string>();
+            var other = new object();
+
+            Assert.False(underTest.Equals(other));
+        }
+
+        [Fact]
         public void EqualsOperator_ValueTypeSameValue_True()
         {
             var underTest = new Maybe<int>(42);
