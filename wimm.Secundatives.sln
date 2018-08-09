@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wimm.Secundatives", "wimm.Secundatives\wimm.Secundatives.csproj", "{044405BB-3A55-41E2-8B09-2131DE205A79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wimm.Secundatives.UnitTests", "wimm.Secundatives.UnitTests\wimm.Secundatives.UnitTests.csproj", "{EA32A6E3-BD3B-4CD9-99ED-A3A58890C7B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{044405BB-3A55-41E2-8B09-2131DE205A79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{044405BB-3A55-41E2-8B09-2131DE205A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{044405BB-3A55-41E2-8B09-2131DE205A79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{044405BB-3A55-41E2-8B09-2131DE205A79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA32A6E3-BD3B-4CD9-99ED-A3A58890C7B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA32A6E3-BD3B-4CD9-99ED-A3A58890C7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA32A6E3-BD3B-4CD9-99ED-A3A58890C7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA32A6E3-BD3B-4CD9-99ED-A3A58890C7B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B4EA64C-470D-4293-A5DA-9C44A947438E}
+	EndGlobalSection
+EndGlobal
