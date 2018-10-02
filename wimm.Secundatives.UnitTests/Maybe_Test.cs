@@ -15,6 +15,15 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
+        public void Exists_ValueTypeDefault_IsFalse() => Assert.False(new Maybe<int>().Exists);
+
+        [Fact]
+        public void Exists_RefernceTypeDefault_IsFalse()
+        {
+            Assert.False(new Maybe<string>().Exists);
+        }
+
+        [Fact]
         public void Construct_ReferenceTypeNull_Throws()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => new Maybe<string>(null));
@@ -35,6 +44,14 @@ namespace wimm.Secundatives.UnitTests
             Assert.Throws<InvalidOperationException>(() => new Maybe<string>().Value);
 
         [Fact]
+        public void Exists_ValueTypeValue_IsTrue()
+        {
+            var underTest = new Maybe<int>(42);
+
+            Assert.True(underTest.Exists);
+        }
+
+        [Fact]
         public void Value_ValueTypeValue_IsValue()
         {
             var expectedValue = 42;
@@ -42,6 +59,14 @@ namespace wimm.Secundatives.UnitTests
             var underTest = new Maybe<int>(expectedValue);
 
             Assert.Equal(expectedValue, underTest.Value);
+        }
+
+        [Fact]
+        public void Exists_ReferenceTypeValue_IsTrue()
+        {
+            var underTest = new Maybe<string>("forty two");
+
+            Assert.True(underTest.Exists);
         }
 
         [Fact]

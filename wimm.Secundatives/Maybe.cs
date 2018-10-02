@@ -15,18 +15,19 @@ namespace wimm.Secundatives
         /// <remarks> Equivalent to default initialization of <see cref="Maybe{T}"/></remarks>
         public readonly static Maybe<T> None;
 
+        public bool Exists { get; }
+
         /// <summary>
         /// The value of maybe object
         /// </summary>
         /// <exception cref="InvalidOperationException">
         /// The maybe contains no value.
         /// </exception>
-        public T Value => _exists
+        public T Value => Exists
             ? _value
             : throw new InvalidOperationException("Value called on maybe with no value");
 
         private readonly T _value;
-        private readonly bool _exists;
 
         /// <summary>
         /// Constructs a new <see cref="Maybe{T}"/> from the specified value
@@ -39,7 +40,7 @@ namespace wimm.Secundatives
                 throw new ArgumentNullException(nameof(value));
 
             _value = value;
-            _exists = true;
+            Exists = true;
         }
 
         public static bool operator ==(Maybe<T> left, Maybe<T> right) => left.Equals(right);
@@ -56,7 +57,7 @@ namespace wimm.Secundatives
 
         public bool Equals(Maybe<T> other)
         {
-            return other._exists == _exists
+            return other.Exists == Exists
                 && EqualityComparer<T>.Default.Equals(_value, other._value);
         }
 
