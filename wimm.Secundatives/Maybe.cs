@@ -56,12 +56,20 @@ namespace wimm.Secundatives
 
         public bool Equals(Maybe<T> other)
         {
-            var interim = EqualityComparer<T>.Default.Equals(other._value);
-
             return other._exists == _exists
                 && EqualityComparer<T>.Default.Equals(_value, other._value);
         }
 
-        public override int GetHashCode() => throw new NotImplementedException();
+        /// <summary>
+        /// NOT SUPPORTED. <see cref="Maybe{T}"/> represents the possibility of a value. Operations
+        /// that require this method should only be perfomed on data that definitely exists. Use
+        /// <typeparamref name="T"/> directly in these cases.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">
+        /// <see cref="GetHashCode"/> is called.
+        /// </exception>
+        public override int GetHashCode() =>
+            throw new InvalidOperationException(
+                $"Use the {nameof(T)} type directly for data that requires GetHashCode.");
     }
 }

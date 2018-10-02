@@ -287,5 +287,21 @@ namespace wimm.Secundatives.UnitTests
 
             Assert.False(underTest != other);
         }
+
+        [Fact]
+        public void GetHashCode_NoneMaybe_Throws()
+        {
+            var underTest = new Maybe<int>();
+
+            Assert.Throws<InvalidOperationException>(() => underTest.GetHashCode());
+        }
+
+        [Fact]
+        public void GetHashCode_ValueMaybe_Throws()
+        {
+            var underTest = new Maybe<int>(42);
+
+            Assert.Throws<InvalidOperationException>(() => underTest.GetHashCode());
+        }
     }
 }
