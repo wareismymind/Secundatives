@@ -15,6 +15,9 @@ namespace wimm.Secundatives
         /// <remarks> Equivalent to default initialization of <see cref="Maybe{T}"/></remarks>
         public readonly static Maybe<T> None;
 
+        /// <summary>
+        /// Indicates whether or not the <see cref="Maybe{T}"/> has a value.
+        /// </summary>
         public bool Exists { get; }
 
         /// <summary>
