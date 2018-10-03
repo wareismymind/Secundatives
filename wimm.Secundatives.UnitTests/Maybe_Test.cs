@@ -6,7 +6,10 @@ namespace wimm.Secundatives.UnitTests
     public class Maybe_Test
     {
         [Fact]
-        public void Construct_ValueTypeDefault_EqualsNone() => Assert.Equal(Maybe<int>.None, new Maybe<int>());
+        public void Construct_ValueTypeDefault_EqualsNone()
+        {
+            Assert.Equal(Maybe<int>.None, new Maybe<int>());
+        }
 
         [Fact]
         public void Construct_ReferenceTypeDefault_EqualsNone()
@@ -15,7 +18,10 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
-        public void Exists_ValueTypeDefault_IsFalse() => Assert.False(new Maybe<int>().Exists);
+        public void Exists_ValueTypeDefault_IsFalse()
+        {
+            Assert.False(new Maybe<int>().Exists);
+        }
 
         [Fact]
         public void Exists_ReferenceTypeDefault_IsFalse()
@@ -32,16 +38,22 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
-        public void Construct_ValueTypeDefaultValue_DoesNotEqualNone() =>
+        public void Construct_ValueTypeDefaultValue_DoesNotEqualNone()
+        {
             Assert.NotEqual(Maybe<int>.None, new Maybe<int>(default(int)));
+        }
 
         [Fact]
-        public void Value_ValueTypeNone_Throws() =>
+        public void Value_ValueTypeNone_Throws()
+        {
             Assert.Throws<InvalidOperationException>(() => new Maybe<int>().Value);
+        }
 
         [Fact]
-        public void Value_ReferenceTypeNone_Throws() =>
+        public void Value_ReferenceTypeNone_Throws()
+        {
             Assert.Throws<InvalidOperationException>(() => new Maybe<string>().Value);
+        }
 
         [Fact]
         public void Exists_ValueTypeValue_IsTrue()
