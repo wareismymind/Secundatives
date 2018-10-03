@@ -9,7 +9,7 @@ namespace wimm.Secundatives.UnitTests
         public void Construct_ValueTypeDefault_EqualsNone() => Assert.Equal(Maybe<int>.None, new Maybe<int>());
 
         [Fact]
-        public void Construct_RefernceTypeDefault_EqualsNone()
+        public void Construct_ReferenceTypeDefault_EqualsNone()
         {
             Assert.Equal(Maybe<string>.None, new Maybe<string>());
         }
@@ -18,7 +18,7 @@ namespace wimm.Secundatives.UnitTests
         public void Exists_ValueTypeDefault_IsFalse() => Assert.False(new Maybe<int>().Exists);
 
         [Fact]
-        public void Exists_RefernceTypeDefault_IsFalse()
+        public void Exists_ReferenceTypeDefault_IsFalse()
         {
             Assert.False(new Maybe<string>().Exists);
         }
