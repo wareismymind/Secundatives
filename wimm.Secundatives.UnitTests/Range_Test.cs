@@ -12,7 +12,7 @@ namespace wimm.Secundatives.UnitTests
         private const string _greaterThanMax = "e";
 
         [Fact]
-        public void ConstructMinMax_NullMin_Throws()
+        public void Construct_NullMin_Throws()
         {
             var ex = Assert.Throws<ArgumentNullException>(() =>
             {
@@ -23,7 +23,7 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
-        public void ConstructMinMax_NullMax_Throws()
+        public void Construct_NullMax_Throws()
         {
             var ex = Assert.Throws<ArgumentNullException>(() =>
             {
@@ -34,7 +34,7 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
-        public void ConstructMinMax_MaxIsLessThanMin_Throws()
+        public void Construct_MaxIsLessThanMin_Throws()
         {
             var ex = Assert.Throws<ArgumentException>(() =>
             {
@@ -43,75 +43,15 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
-        public void ConstructMinMax_MaxIsMin_Constructs()
+        public void Construct_MaxIsMin_Constructs()
         {
             var _ = new Range<string>(_min, _min);
         }
 
         [Fact]
-        public void ConstructMinMax_MaxIsGreaterThanMin_Constructs()
+        public void Construct_MaxIsGreaterThanMin_Constructs()
         {
             var _ = new Range<string>(_min, _max);
-        }
-
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
-        public void ConstructMinMaxExclusive_NullMin_Throws(bool exclusive)
-        {
-            var ex = Assert.Throws<ArgumentNullException>(() =>
-            {
-                var _ = new Range<string>(null, _max, exclusive);
-            });
-
-            Assert.Equal("min", ex.ParamName);
-        }
-
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
-        public void ConstructMinMaxExclusive_NullMax_Throws(bool exclusive)
-        {
-            var ex = Assert.Throws<ArgumentNullException>(() =>
-            {
-                var _ = new Range<string>(_min, null, exclusive);
-            });
-
-            Assert.Equal("max", ex.ParamName);
-        }
-
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
-        public void ConstructMinMaxExclusive_MaxIsLessThanMin_Throws(bool exclusive)
-        {
-            var ex = Assert.Throws<ArgumentException>(() =>
-            {
-                var _ = new Range<string>(_min, _lessThanMin, exclusive);
-            });
-        }
-
-        [Fact]
-        public void ConstructMinMaxExclusive_NonExclusiveMaxIsMin_Constructs()
-        {
-            var _ = new Range<string>(_min, _max, false);
-        }
-
-        [Fact]
-        public void ConstructMinMaxExclusive_ExclusiveMaxIsMin_Throws()
-        {
-            var ex = Assert.Throws<ArgumentException>(() =>
-            {
-                var _ = new Range<string>(_min, _min, true);
-            });
-        }
-
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
-        public void ConstructMinMaxExclusive_MaxGreaterThanMin_Constructs(bool exclusive)
-        {
-            var _ = new Range<string>(_min, _max, exclusive);
         }
 
         [Fact]
@@ -121,45 +61,11 @@ namespace wimm.Secundatives.UnitTests
             Assert.Equal(_min, underTest.Min);
         }
 
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
-        public void Min_ConstructMinMaxExclusive_IsMin(bool exclusive)
-        {
-            var underTest = new Range<string>(_min, _max, exclusive);
-            Assert.Equal(_min, underTest.Min);
-        }
-
         [Fact]
         public void Max_ConstructMinMax_IsMax()
         {
             var underTest = new Range<string>(_min, _max);
             Assert.Equal(_max, underTest.Max);
-        }
-
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
-        public void Max_ConstructMinMaxExclusive_IsMax(bool exclusive)
-        {
-            var underTest = new Range<string>(_min, _max, exclusive);
-            Assert.Equal(_max, underTest.Max);
-        }
-
-        [Fact]
-        public void Exclusive_ConstructMinMax_IsFalse()
-        {
-            var underTest = new Range<string>(_min, _max);
-            Assert.False(underTest.Exclusive);
-        }
-
-        [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
-        public void Exclusive_ConstructMinMaxExclusive_IsExclusive(bool exclusive)
-        {
-            var underTest = new Range<string>(_min, _max, exclusive);
-            Assert.Equal(exclusive, underTest.Exclusive);
         }
 
         [Fact]
@@ -176,72 +82,37 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
-        public void Includes_NonExclusiveValueIsLessThanMin_False()
+        public void Includes_ValueIsLessThanMin_False()
         {
-            var underTest = new Range<string>(_min, _max, false);
+            var underTest = new Range<string>(_min, _max);
             Assert.False(underTest.Includes(_lessThanMin));
         }
 
         [Fact]
-        public void Includes_NonExclusiveValueIsMin_True()
+        public void Includes_ValueIsMin_True()
         {
-            var underTest = new Range<string>(_min, _max, false);
+            var underTest = new Range<string>(_min, _max);
             Assert.True(underTest.Includes(_min));
         }
 
         [Fact]
-        public void Includes_NonExclusiveValueIsBetweenMinAndMax_True()
+        public void Includes_ValueIsBetweenMinAndMax_True()
         {
-            var underTest = new Range<string>(_min, _max, false);
+            var underTest = new Range<string>(_min, _max);
             Assert.True(underTest.Includes(_betweenMinAndMax));
         }
 
         [Fact]
-        public void Includes_NonExclusiveValueIsMax_True()
+        public void Includes_ValueIsMax_True()
         {
-            var underTest = new Range<string>(_min, _max, false);
+            var underTest = new Range<string>(_min, _max);
             Assert.True(underTest.Includes(_max));
         }
 
         [Fact]
-        public void Includes_NonExclusiveValueIsGreaterThanMax_True()
+        public void Includes_ValueIsGreaterThanMax_True()
         {
-            var underTest = new Range<string>(_min, _max, false);
-            Assert.False(underTest.Includes(_greaterThanMax));
-        }
-
-        [Fact]
-        public void Includes_ExclusiveValueIsLessThanMin_False()
-        {
-            var underTest = new Range<string>(_min, _max, true);
-            Assert.False(underTest.Includes(_lessThanMin));
-        }
-
-        [Fact]
-        public void Includes_ExclusiveValueIsMin_False()
-        {
-            var underTest = new Range<string>(_min, _max, true);
-            Assert.False(underTest.Includes(_min));
-        }
-
-        [Fact]
-        public void Includes_ExclusiveValueIsBetweenMinAndMax_True()
-        {
-            var underTest = new Range<string>(_min, _max, true);
-            Assert.True(underTest.Includes(_betweenMinAndMax));
-        }
-
-        [Fact]
-        public void Includes_ExclusiveValueIsMax_False()
-        {
-            var underTest = new Range<string>(_min, _max, true);
-            Assert.False(underTest.Includes(_max));
-        }
-
-        [Fact]
-        public void Includes_ExclusiveValueIsGreaterThanMax_True()
-        {
-            var underTest = new Range<string>(_min, _max, true);
+            var underTest = new Range<string>(_min, _max);
             Assert.False(underTest.Includes(_greaterThanMax));
         }
     }
