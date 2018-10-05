@@ -12,7 +12,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
     public class Expect_Test
     {
         private const string _valid = "doot";
-        const string _message = "this is a message";
+        private const string _message = "this is a message";
 
         [Fact]
         public void ExpectMessage_NullMessage_Throws()
