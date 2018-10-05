@@ -42,7 +42,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public void ExpectNoMessage_DoesNotExist_Throws()
         {
             var underTest = new Maybe<string>();
-            var ex = Assert.Throws<ExpectException>(() => underTest.Expect(_message));
+            var ex = Assert.Throws<ExpectException>(() => underTest.Expect());
         }
 
         [Fact]
