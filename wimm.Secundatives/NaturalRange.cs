@@ -3,7 +3,7 @@
 namespace wimm.Secundatives
 {
     /// <summary>
-    /// A <see cref="Range{T}"/> of the natural numbers.
+    /// A <see cref="Range{T}"/> of natural numbers.
     /// </summary>
     /// <inheritDoc />
     public class NaturalRange : IRange<int>
