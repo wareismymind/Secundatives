@@ -10,7 +10,9 @@ namespace wimm.Secundatives
         /// <summary>
         /// Constructs a new instance of <see cref="Error"/> with the specified message
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message"> The message to be included with the error </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null </exception>
+        /// <exception cref="ArgumentException"> <paramref name="message"/> is whitespace </exception>
         public Error(string message)
         {
             if (message == null)
