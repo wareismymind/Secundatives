@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace wimm.Secundatives
 {
     /// <summary>
     /// Base class for Error types to be returned from results. 
     /// </summary>
+    [DebuggerDisplay("{Message}")]
     public class Error
     {
         /// <summary>
@@ -28,5 +30,14 @@ namespace wimm.Secundatives
         /// A detailed, non-null message describing the error. 
         /// </summary>
         public string Message { get; }
+
+        /// <summary>
+        /// Converts the <see cref="Error"/> into a <see cref="string"/>. 
+        /// </summary>
+        /// <returns> The formatted error message </returns>
+        public override sealed string ToString()
+        {
+            return Message;
+        }
     }
 }
