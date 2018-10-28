@@ -14,13 +14,6 @@ namespace wimm.Secundatives.UnitTests
             Assert.Throws<InvalidOperationException>(() => underTest.Error);
         }
 
-        [Fact]
-        public void Error_ContainsError_ReturnsError()
-        {
-            var underTest = ConstructErr();
-            Assert.Equal(_err, underTest.Error);
-        }
-
 
         [Fact]
         public void Value_ContainsError_Throws()
@@ -28,6 +21,14 @@ namespace wimm.Secundatives.UnitTests
             var underTest = ConstructErr();
             Assert.Throws<InvalidOperationException>(() => underTest.Value);
         }
+
+        [Fact]
+        public void Error_ContainsError_ReturnsError()
+        {
+            var underTest = ConstructErr();
+            Assert.Equal(_err, underTest.Error);
+        }
+
 
         [Fact]
         public void Value_ContainsValue_ReturnsValue()
