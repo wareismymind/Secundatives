@@ -35,20 +35,16 @@ namespace wimm.Secundatives
         /// <typeparam name="W"> The type to test for </typeparam>
         /// <returns>Returns true if the internal value is the same as <typeparamref name="W"/></returns>
         /// <exception cref="NotSupportedException"> 
-        /// <typeparamref name="W"/> is not one of or is not a superclass of 
-        /// <typeparamref name="T"/> or <typeparamref name="U"/>
+        /// <typeparamref name="W"/> is not one of <typeparamref name="T"/> or <typeparamref name="U"/>
         /// </exception>
         public bool Is<W>()
         {
-            if (_value is W)
-                return true;
-
             var wType = typeof(W);
 
-            if (IsMemberTypeOrSuperType(wType))
-                return false;
+            if (!IsMemberType(wType))
+                throw UnsupportedType(wType, new List<Type> { typeof(T), typeof(U) });
 
-            throw UnsupportedType(wType, new List<Type> { typeof(T), typeof(U) });
+            return _value is W;
         }
 
 
@@ -61,8 +57,7 @@ namespace wimm.Secundatives
         /// <typeparamref name="W"/>
         /// </exception>
         /// <exception cref="NotSupportedException"> 
-        /// <typeparamref name="W"/> is not one of or is not a superclass of 
-        /// <typeparamref name="T"/> or <typeparamref name="U"/>
+        /// <typeparamref name="W"/> is not one of <typeparamref name="T"/> or <typeparamref name="U"/>
         /// </exception>
         public W Get<W>() => Is<W>() ? (W)_value : throw BadType(typeof(W), _value.GetType());
 
@@ -87,20 +82,10 @@ namespace wimm.Secundatives
         public static implicit operator Variant<T, U>(T val) => new Variant<T, U>(val);
         public static implicit operator Variant<T, U>(U val) => new Variant<T, U>(val);
 
-        private bool IsSuperclassOfMemberType(Type type)
-        {
-            return typeof(T).IsSubclassOf(type) || typeof(U).IsSubclassOf(type);
-
-        }
 
         private bool IsMemberType(Type type)
         {
             return type == typeof(U) || type == typeof(T);
-        }
-
-        private bool IsMemberTypeOrSuperType(Type type)
-        {
-            return IsMemberType(type) || IsSuperclassOfMemberType(type);
         }
 
         private static InvalidOperationException BadType(Type expected, Type recieved)

@@ -26,7 +26,7 @@ namespace wimm.Secundatives.UnitTests
         [Fact]
         public void IsBase_ContainsDerived_ReturnsTrue()
         {
-            var underTest = new Variant<string, B>(new B());
+            var underTest = new Variant<string, A>(new B());
             Assert.True(underTest.Is<A>());
         }
 
