@@ -46,7 +46,7 @@ namespace wimm.Secundatives
         /// <exception cref="InvalidOperationException"> The variant's value is not of type 
         /// <typeparamref name="W"/>
         /// </exception>
-        /// /// <remarks> There is no point calling this method with a value of <typeparamref name="W"/> that 
+        /// <remarks> There is no point calling this method with a value of <typeparamref name="W"/> that 
         /// is not either <typeparamref name="T"/> or <typeparamref name="U"/> 
         /// </remarks>
         public W Get<W>() => Is<W>() ? (W)_value : throw BadType(typeof(W), _value.GetType());
