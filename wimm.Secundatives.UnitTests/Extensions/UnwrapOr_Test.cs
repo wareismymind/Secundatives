@@ -12,7 +12,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
     {
         private const string _valid = "doot";
         private const string _default = "tood";
-        private Func<string> _defaultFunc = () => _default;
+        private readonly Func<string> _defaultFunc = () => _default;
 
         [Fact]
         public void UnwrapOr_Value_ReturnsValue()
