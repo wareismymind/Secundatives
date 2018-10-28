@@ -14,7 +14,7 @@ namespace wimm.Secundatives
         public bool IsError => Is<Error>();
 
         /// <summary> A value indicating if the operation successfully returned a value </summary>
-        public bool IsSome => Is<T>();
+        public bool IsValue => Is<T>();
 
         /// <summary> Gets the value contained in the result. </summary>
         /// <exception cref="InvalidOperationException"> The result contains no value - operation failed </exception>

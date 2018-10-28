@@ -38,17 +38,17 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
-        public void IsSome_ContainsValue_ReturnsTrue()
+        public void IsValue_ContainsValue_ReturnsTrue()
         {
             var underTest = ConstructInt();
-            Assert.True(underTest.IsSome);
+            Assert.True(underTest.IsValue);
         }
 
         [Fact]
-        public void IsSome_ContainsError_ReturnsFalse()
+        public void IsValue_ContainsError_ReturnsFalse()
         {
             var underTest = ConstructErr();
-            Assert.False(underTest.IsSome);
+            Assert.False(underTest.IsValue);
         }
 
         [Fact]
