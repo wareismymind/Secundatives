@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace wimm.Secundatives
 {
@@ -9,19 +10,20 @@ namespace wimm.Secundatives
     {
         /// <summary>
         /// Ensures that <typeparamref name="U"/> and <typeparamref name="T"/> are not within the same
-        /// inheritance heirarchy
+        /// inheritance heirarchy or the same type
         /// </summary>
         static Variant()
         {
             var uType = typeof(U);
             var tType = typeof(T);
 
-            if (tType.IsSubclassOf(uType) || uType.IsSubclassOf(tType) )
-            {
+            if (tType.IsSubclassOf(uType) || uType.IsSubclassOf(tType))
                 //TODO:CN -- Maybe fix? Maybe not?
                 throw new NotSupportedException(
                     "Cannot create a variant of two classess within the same inheritance heirarchy");
-            }
+
+            if (uType == tType)
+                throw new NotSupportedException("Cannot create a variant witih two objects of the same type");
         }
 
         //Mike Tyson
@@ -32,10 +34,23 @@ namespace wimm.Secundatives
         /// </summary>
         /// <typeparam name="W"> The type to test for </typeparam>
         /// <returns>Returns true if the internal value is the same as <typeparamref name="W"/></returns>
-        /// <remarks> There is no point calling this method with a value of <typeparamref name="W"/> that 
-        /// is not either <typeparamref name="T"/> or <typeparamref name="U"/> 
-        /// </remarks>
-        public bool Is<W>() => _value is W;
+        /// <exception cref="NotSupportedException"> 
+        /// <typeparamref name="W"/> is not one of or is not a superclass of 
+        /// <typeparamref name="T"/> or <typeparamref name="U"/>
+        /// </exception>
+        public bool Is<W>()
+        {
+            if (_value is W)
+                return true;
+
+            var wType = typeof(W);
+
+            if (IsMemberTypeOrSuperType(wType))
+                return false;
+
+            throw UnsupportedType(wType, new List<Type> { typeof(T), typeof(U) });
+        }
+
 
         /// <summary>
         /// Gets a value of type <typeparamref name="W"/> if possible. 
@@ -45,9 +60,10 @@ namespace wimm.Secundatives
         /// <exception cref="InvalidOperationException"> The variant's value is not of type 
         /// <typeparamref name="W"/>
         /// </exception>
-        /// <remarks> There is no point calling this method with a value of <typeparamref name="W"/> that 
-        /// is not either <typeparamref name="T"/> or <typeparamref name="U"/> 
-        /// </remarks>
+        /// <exception cref="NotSupportedException"> 
+        /// <typeparamref name="W"/> is not one of or is not a superclass of 
+        /// <typeparamref name="T"/> or <typeparamref name="U"/>
+        /// </exception>
         public W Get<W>() => Is<W>() ? (W)_value : throw BadType(typeof(W), _value.GetType());
 
         /// <summary>
@@ -67,15 +83,40 @@ namespace wimm.Secundatives
         {
             _value = value;
         }
-        
+
         public static implicit operator Variant<T, U>(T val) => new Variant<T, U>(val);
         public static implicit operator Variant<T, U>(U val) => new Variant<T, U>(val);
+
+        private bool IsSuperclassOfMemberType(Type type)
+        {
+            return typeof(T).IsSubclassOf(type) || typeof(U).IsSubclassOf(type);
+
+        }
+
+        private bool IsMemberType(Type type)
+        {
+            return type == typeof(U) || type == typeof(T);
+        }
+
+        private bool IsMemberTypeOrSuperType(Type type)
+        {
+            return IsMemberType(type) || IsSuperclassOfMemberType(type);
+        }
 
         private static InvalidOperationException BadType(Type expected, Type recieved)
         {
             return new InvalidOperationException(
                 $"Variant conversion to uncontained type:\nRequested: {expected}\nGot: {recieved}");
         }
+
+        private static NotSupportedException UnsupportedType(Type expected, IEnumerable<Type> available)
+        {
+            return new NotSupportedException(
+                $"Variant was checked for type it cannot contain:\nRequested:{expected}\nAvailable: {string.Join("\n", available)}");
+        }
+
+
+
     }
 
 

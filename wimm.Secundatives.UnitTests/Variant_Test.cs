@@ -8,6 +8,15 @@ namespace wimm.Secundatives.UnitTests
         private const string _testString = "doot";
 
         [Fact]
+        public void GetLong_LongNotTypeParam_Throws()
+        {
+            var underTest = ConstructInt();
+            Assert.Throws<NotSupportedException>(() => underTest.Is<long>());
+        }
+
+
+
+        [Fact]
         public void GetString_ContainsInt_Throws()
         {
             var underTest = ConstructInt();
@@ -19,6 +28,13 @@ namespace wimm.Secundatives.UnitTests
         {
             var underTest = new Variant<string, B>(new B());
             Assert.True(underTest.Is<A>());
+        }
+
+        [Fact]
+        public void IsDerived_ContainsBase_Throws()
+        {
+            var underTest = new Variant<string, A>(new A());
+            Assert.Throws<NotSupportedException>(() => underTest.Get<B>());
         }
 
 
