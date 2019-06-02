@@ -21,7 +21,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var value = "doot";
             var res = value.AsMaybe();
 
-            Assert.True(res.Exists);
+            Assert.Equal(res.Value, value);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
 
             var res = value.AsMaybe();
 
-            Assert.True(res.Exists);
+            Assert.Equal(value.Value, res.Value);
         }
 
 
