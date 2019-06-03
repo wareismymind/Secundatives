@@ -67,5 +67,37 @@ namespace wimm.Secundatives.Extensions
         /// the result of calling <paramref name="func"/> </returns>
         public static T UnwrapOr<T>(this Maybe<T> maybe, Func<T> func) => maybe.Exists ? maybe.Value : func();
 
+
+        /// <summary>
+        /// An explicit conversion of class types to <see cref="Maybe{T}"/> for ease of use and compatibility
+        /// </summary>
+        /// <typeparam name="T"> The type that will be tested and the type of the resultant <see cref="Maybe{T}"/> </typeparam>
+        /// <param name="value"> The value to be tested </param>
+        /// <returns> A <see cref="Maybe{T}"/> with a value if <paramref name="value"/> is not <c> null </c> else 
+        /// <see cref="Maybe{T}.None"/>
+        /// </returns>
+        public static Maybe<T> AsMaybe<T>(this T value) where T : class
+        {
+            return value != null ? new Maybe<T>(value) : Maybe<T>.None;
+        }
+
+
+
+        /// <summary>
+        /// An explicit conversion from nullable struct types  to <see cref="Maybe{T}"/> for ease of use and compatibility
+        /// </summary>
+        /// <typeparam name="T"> 
+        /// The underlying type of the <see cref="Nullable{T}"/> and the type of the resultant <see cref="Maybe{T}"/>
+        /// </typeparam>
+        /// <param name="value"> The value to be tested </param>
+        /// <returns> A <see cref="Maybe{T}"/> with a value if <paramref name="value"/> is not <c> null </c> else 
+        /// <see cref="Maybe{T}.None"/>
+        /// </returns>
+        public static Maybe<T> AsMaybe<T>(this T? value) where T : struct
+        {
+            return value.HasValue ? new Maybe<T>(value.Value) : Maybe<T>.None;
+        }
+
+
     }
 }
