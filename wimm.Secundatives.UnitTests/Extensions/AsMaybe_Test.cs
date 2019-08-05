@@ -1,4 +1,5 @@
-﻿using wimm.Secundatives.Extensions;
+﻿using System.Threading.Tasks;
+using wimm.Secundatives.Extensions;
 using Xunit;
 
 namespace wimm.Secundatives.UnitTests.Extensions
@@ -42,6 +43,47 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var res = value.AsMaybe();
 
             Assert.Equal(value.Value, res.Value);
+        }
+
+        [Fact]
+        public async Task AsMaybeTaskClass_Null_ReturnsNone()
+        {
+            var value = Task.FromResult((string)null);
+
+            var res = await value.AsMaybe();
+
+            Assert.Equal(Maybe<string>.None, res);
+        }
+
+
+        [Fact]
+        public async Task AsMaybeTaskClass_Value_ReturnsSome()
+        {
+            var value = Task.FromResult("doot");
+
+            var res = await value.AsMaybe();
+
+            Assert.Equal("doot", res.Value);
+        }
+
+        [Fact]
+        public async Task AsMaybeTaskNullable_Null_ReturnsNone()
+        {
+            var value = Task.FromResult((int?)null);
+
+            var res = await value.AsMaybe();
+
+            Assert.Equal(Maybe<int>.None, res);
+        }
+
+        [Fact]
+        public async Task AsMaybeTaskNullable_Value_ReturnsSome()
+        {
+            var value = Task.FromResult((int?)25);
+
+            var res = await value.AsMaybe();
+
+            Assert.Equal(25, res.Value);
         }
 
 

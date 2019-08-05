@@ -81,8 +81,6 @@ namespace wimm.Secundatives.Extensions
             return value != null ? new Maybe<T>(value) : Maybe<T>.None;
         }
 
-
-
         /// <summary>
         /// An explicit conversion from nullable struct types  to <see cref="Maybe{T}"/> for ease of use and compatibility
         /// </summary>
@@ -97,6 +95,40 @@ namespace wimm.Secundatives.Extensions
         {
             return value.HasValue ? new Maybe<T>(value.Value) : Maybe<T>.None;
         }
+
+
+        /// <summary>
+        /// Helper function that awaits a <see cref="Task{T}"/>'s result and converts it into a <see cref="Maybe{T}"/>
+        /// </summary>
+        /// <typeparam name="T"> 
+        /// <typeparam name="T"> The type that will be returned from awaiting the task and that 
+        /// will be tested and the type of the resultant <see cref="Maybe{T}"/> </typeparam>
+        /// </typeparam>
+        /// <param name="value"> A <see cref="Task{T}"/> That will contain the value to be tested </param
+        /// <returns> A <see cref="Maybe{T}"/> with a value if <see cref="value.Result"/> is not <c> null </c> else 
+        /// <see cref="Maybe{T}.None"/>
+        /// </returns>
+        public static async Task<Maybe<T>> AsMaybe<T>(this Task<T> value) where T : class
+        {
+            return (await value).AsMaybe();
+        }
+
+
+        /// <summary>
+        /// Helper function that awaits a <see cref="Task{Nullable{T}}"/>'s result and converts it into a <see cref="Maybe{T}"/>
+        /// </summary>
+        /// <typeparam name="T"> 
+        /// The underlying type of the <see cref="Nullable{T}"/> and the type of the resultant <see cref="Maybe{T}"/>
+        /// </typeparam>
+        /// <param name="value"> A <see cref="Task{T}"/> That will contain the value to be tested </param
+        /// <returns> A <see cref="Maybe{T}"/> with a value if <see cref="value.Result"/> is not <c> null </c> else 
+        /// <see cref="Maybe{T}.None"/>
+        /// </returns>
+        public static async Task<Maybe<T>> AsMaybe<T>(this Task<T?> value) where T : struct
+        {
+            return (await value).AsMaybe();
+        }
+
 
 
     }
