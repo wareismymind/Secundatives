@@ -19,7 +19,7 @@ namespace wimm.Secundatives.Extensions
         /// </summary>
         /// <typeparam name="T"> The type of value contained with the <paramref name="maybe"/> </typeparam>
         /// <param name="maybe"> The <see cref="Maybe{T}"/> to be inspected </param>
-        /// <exception cref="ExpectException"> <paramref name="maybe"/> contains no value </exception>
+        /// <exception cref="ExpectException"> <paramref name="maybe"/> is <see cref="Maybe{T}.None"/> </exception>
         /// <returns> The <typeparamref name="T"/> held within <paramref name="maybe"/> if it exists. </returns>
         public static T Expect<T>(this Maybe<T> maybe) => maybe.Expect($"Expected value in {nameof(Maybe<T>)}");
 
@@ -31,7 +31,7 @@ namespace wimm.Secundatives.Extensions
         /// <param name="maybe"> The <see cref="Maybe{T}"/> to be inspected </param>
         /// <param name="message"> The message to be contained in the thrown <see cref="ExpectException"/> 
         /// if <paramref name="maybe"/> contains no value </param>
-        /// <exception cref="ExpectException"> <paramref name="maybe"/> contains no value </exception>
+        /// <exception cref="ExpectException"> <paramref name="maybe"/> is <see cref="Maybe{T}.None"/></exception>
         /// <returns> The <typeparamref name="T"/> held within <paramref name="maybe"/> if it exists. </returns>
         public static T Expect<T>(this Maybe<T> maybe, string message)
         {
@@ -41,6 +41,34 @@ namespace wimm.Secundatives.Extensions
                 throw new ArgumentException("Parameter must not be whitespace or empty", nameof(message));
 
             return maybe.Exists ? maybe.Value : throw new ExpectException(message);
+        }
+
+        /// <summary>
+        /// Helper function to apply <see cref="Expect{T}(Maybe{T})"/> in async contexts. Awaits the task containing the <see cref="Maybe{T}"/>
+        /// and then applies the <see cref="Expect{T}(Maybe{T})"/> function to it.
+        /// </summary>
+        /// <typeparam name="T"> The type of value contained with the <paramref name="maybe"/> </typeparam>
+        /// <param name="maybeTask">A task resulting in a <see cref="Maybe{T}"/> to be inspected</param>
+        /// <param name="message"> The message to be contained in the thrown if there is no value <see cref="ExpectException"/> 
+        /// /// <exception cref="ExpectException"> <paramref name="maybeTask"/> results in <see cref="Maybe{T}.None"/></exception>
+        /// <returns> The <typeparamref name="T"/> held within the result of <paramref name="maybeTask"/> if it exists</returns>
+        public static async Task<T> Expect<T>(this Task<Maybe<T>> maybeTask, string message)
+        {
+            return (await maybeTask).Expect(message);
+        }
+
+
+        /// <summary>
+        /// Helper function to apply <see cref="Expect{T}(Maybe{T})"/> in async contexts. Awaits the task containing the <see cref="Maybe{T}"/>
+        /// and then applies the <see cref="Expect{T}(Maybe{T})"/> function to it.
+        /// </summary>
+        /// <typeparam name="T"> The type of value contained with the <paramref name="maybe"/> </typeparam>
+        /// <param name="maybeTask">A task resulting in a <see cref="Maybe{T}"/> to be inspected</param>
+        /// /// <exception cref="ExpectException"> <paramref name="maybeTask"/> results in <see cref="Maybe{T}.None"/></exception>
+        /// <returns> The <typeparamref name="T"/> held within the result of <paramref name="maybeTask"/> if it exists</returns>
+        public static async Task<T> Expect<T>(this Task<Maybe<T>> maybeTask)
+        {
+            return (await maybeTask).Expect();
         }
 
 
