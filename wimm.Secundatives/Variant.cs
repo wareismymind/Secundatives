@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace wimm.Secundatives
@@ -20,7 +20,7 @@ namespace wimm.Secundatives
             if (tType.IsSubclassOf(uType) || uType.IsSubclassOf(tType))
                 //TODO:CN -- Maybe fix? Maybe not?
                 throw new NotSupportedException(
-                    "Cannot create a variant of two classess within the same inheritance heirarchy");
+                    "Cannot create a variant of two classess within the same inheritance heirarchy, consider a Maybe<T> of their common base class");
 
             if (uType == tType)
                 throw new NotSupportedException("Cannot create a variant witih two objects of the same type");
