@@ -14,8 +14,6 @@ namespace wimm.Secundatives.UnitTests
             Assert.Throws<NotSupportedException>(() => underTest.Is<long>());
         }
 
-
-
         [Fact]
         public void GetString_ContainsInt_Throws()
         {
@@ -24,19 +22,26 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
-        public void IsBase_ContainsDerived_ReturnsTrue()
+        public void IsBase_ContainsDerivedInVariantOfBase_ReturnsTrue()
         {
-            var underTest = new Variant<string, A>(new B());
-            Assert.True(underTest.Is<A>());
+            var underTest = new Variant<string, Base>(new Derived());
+            Assert.True(underTest.Is<Base>());
         }
 
         [Fact]
-        public void IsDerived_ContainsBase_Throws()
+        public void IsDerived_ContainsDerivedInVariantOfBase_ReturnsTrue()
         {
-            var underTest = new Variant<string, A>(new A());
-            Assert.Throws<NotSupportedException>(() => underTest.Get<B>());
+            var underTest = new Variant<Base, string>(new Derived());
+            Assert.True(underTest.Is<Derived>());
         }
 
+        [Fact]
+        public void IsOtherDerived_ContainsDerivedInVariantOfBase_ReturnsFalse()
+        {
+            var underTest = new Variant<Base, string>(new OtherDerived());
+
+            Assert.False(underTest.Is<Derived>());
+        }
 
         [Fact]
         public void GetString_ContainsString_ReturnsString()
@@ -79,7 +84,9 @@ namespace wimm.Secundatives.UnitTests
             return new Variant<int, string>(42);
         }
 
-        class A { }
-        class B : A { }
+        class Base { }
+        class Derived : Base { }
+        class OtherDerived : Base { }
+
     }
 }
