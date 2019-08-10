@@ -2,3 +2,6 @@
 
 **/[Bb]in/
 **/[Oo]bj/
+\.sonarqube/
+
+cov/
