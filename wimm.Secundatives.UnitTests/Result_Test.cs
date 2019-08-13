@@ -68,12 +68,12 @@ namespace wimm.Secundatives.UnitTests
         
         private Result<int> ConstructInt()
         {
-            return new Result<int>(42);
+            return 42;
         }
 
         private Result<int> ConstructErr()
         {
-            return new Result<int>(_err);
+            return _err;
         }
 
     }
