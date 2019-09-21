@@ -33,15 +33,15 @@ namespace wimm.Secundatives
         /// Checks the type of the type param against the type of the internal member
         /// </summary>
         /// <typeparam name="W"> The type to test for </typeparam>
-        /// <returns>Returns true if the internal value is the same as <typeparamref name="W"/></returns>
+        /// <returns>Returns true if the internal value is a <typeparamref name="W"/></returns>
         /// <exception cref="NotSupportedException"> 
-        /// <typeparamref name="W"/> is not one of <typeparamref name="T"/> or <typeparamref name="U"/>
+        /// <typeparamref name="W"/> is not assignable to <typeparamref name="T"/> or <typeparamref name="U"/>
         /// </exception>
         public bool Is<W>()
         {
             var wType = typeof(W);
 
-            if (!IsMemberType(wType))
+            if (!IsAssignableFromMemberType(wType))
                 throw UnsupportedType(wType, new List<Type> { typeof(T), typeof(U) });
 
             return _value is W;
@@ -57,7 +57,7 @@ namespace wimm.Secundatives
         /// <typeparamref name="W"/>
         /// </exception>
         /// <exception cref="NotSupportedException"> 
-        /// <typeparamref name="W"/> is not one of <typeparamref name="T"/> or <typeparamref name="U"/>
+        /// <typeparamref name="W"/> is not assignable from one of <typeparamref name="T"/> or <typeparamref name="U"/>
         /// </exception>
         public W Get<W>() => Is<W>() ? (W)_value : throw BadType(typeof(W), _value.GetType());
 
@@ -83,9 +83,9 @@ namespace wimm.Secundatives
         public static implicit operator Variant<T, U>(U val) => new Variant<T, U>(val);
 
 
-        private bool IsMemberType(Type type)
+        private bool IsAssignableFromMemberType(Type type)
         {
-            return type == typeof(U) || type == typeof(T);
+            return typeof(U).IsAssignableFrom(type) || typeof(T).IsAssignableFrom(type);
         }
 
         private static InvalidOperationException BadType(Type expected, Type recieved)
