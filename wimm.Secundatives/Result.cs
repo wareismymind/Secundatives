@@ -26,6 +26,12 @@ namespace wimm.Secundatives
         /// <exception cref="InvalidOperationException"> The result contains no error - operation succeeded </exception>
         public TError Error => Get<TError>();
 
+        /// <summary> Gets the optional value as a <see cref="Maybe{T}"/> </summary>
+        public Maybe<T> Ok() => IsValue ? new Maybe<T>(Value) : new Maybe<T>();
+
+        /// <summary> Gets the optional error as a <see cref="Maybe{TError}"/> </summary>
+        public Maybe<TError> Err() => IsError ? new Maybe<TError>(Error) : new Maybe<TError>();
+
         /// <summary>
         /// Constructs a <see cref="Result{T}"/> from a <typeparamref name="T"/> value
         /// </summary>

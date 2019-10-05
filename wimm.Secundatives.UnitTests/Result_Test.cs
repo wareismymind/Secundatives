@@ -65,7 +65,35 @@ namespace wimm.Secundatives.UnitTests
             Assert.False(underTest.IsError);
         }
 
-        
+        [Fact]
+        public void Err_ContainsValue_ReturnsNone()
+        {
+            var underTest = ConstructInt();
+            Assert.False(underTest.Err().Exists);
+        }
+
+        [Fact]
+        public void Err_ContainsError_ReturnsSome()
+        {
+            var underTest = ConstructErr();
+            Assert.Equal(underTest.Error, underTest.Err().Value);
+        }
+
+        [Fact]
+        public void Ok_ContainsValue_ReturnsSome()
+        {
+            var underTest = ConstructInt();
+            Assert.Equal(underTest.Value, underTest.Ok().Value);
+        }
+
+        [Fact]
+        public void Ok_ContainsError_ReturnsNone()
+        {
+            var underTest = ConstructErr();
+            Assert.False(underTest.Ok().Exists);
+        }
+
+
         private Result<int> ConstructInt()
         {
             return 42;
