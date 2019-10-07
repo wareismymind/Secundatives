@@ -64,6 +64,8 @@ namespace wimm.Secundatives
                 && EqualityComparer<T>.Default.Equals(_value, other._value);
         }
 
+        public static implicit operator Maybe<T>(T value) => new Maybe<T>(value);
+
         /// <summary>
         /// NOT SUPPORTED. <see cref="Maybe{T}"/> represents the possibility of a value. Operations
         /// that require this method should only be perfomed on data that definitely exists. Use
