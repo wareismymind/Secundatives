@@ -41,7 +41,7 @@ namespace wimm.Secundatives
         }
 
         /// <summary> Constructs a <see cref="Result{T}"/> from an <see cref="Error"/> </summary>
-        /// <param name="err"> The <see cref="TError"/> explaining why the operation was unsucessful </param>
+        /// <param name="err"> The <typeparamref name="TError"/> explaining why the operation was unsucessful </param>
         public Result(TError err) : base(err)
         {
         }

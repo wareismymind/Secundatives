@@ -29,6 +29,10 @@ namespace wimm.Secundatives
             _time = time;
         }
 
+        /// <summary>
+        /// Converting constructor that creates a timespan from a time of day
+        /// </summary>
+        /// <param name="timeOfDay"> The time of day to be converted </param>
         public static implicit operator TimeSpan(TimeOfDay timeOfDay) => timeOfDay._time;
     }
 }
