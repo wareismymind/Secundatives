@@ -1,7 +1,6 @@
 .vs/
-
 **/[Bb]in/
 **/[Oo]bj/
-\.sonarqube/
-
+.sonarqube/
+.cov
 cov/
