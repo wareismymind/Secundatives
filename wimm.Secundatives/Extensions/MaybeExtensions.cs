@@ -47,10 +47,10 @@ namespace wimm.Secundatives.Extensions
         /// Helper function to apply <see cref="Expect{T}(Maybe{T})"/> in async contexts. Awaits the task containing the <see cref="Maybe{T}"/>
         /// and then applies the <see cref="Expect{T}(Maybe{T})"/> function to it.
         /// </summary>
-        /// <typeparam name="T"> The type of value contained with the <paramref name="maybe"/> </typeparam>
+        /// <typeparam name="T"> The type of value contained with the <paramref name="maybeTask"/> </typeparam>
         /// <param name="maybeTask">A task resulting in a <see cref="Maybe{T}"/> to be inspected</param>
-        /// <param name="message"> The message to be contained in the thrown if there is no value <see cref="ExpectException"/> 
-        /// /// <exception cref="ExpectException"> <paramref name="maybeTask"/> results in <see cref="Maybe{T}.None"/></exception>
+        /// <param name="message"> The message to be contained in the thrown if there is no value <see cref="ExpectException"/> </param> 
+        /// <exception cref="ExpectException"> <paramref name="maybeTask"/> results in <see cref="Maybe{T}.None"/></exception>
         /// <returns> The <typeparamref name="T"/> held within the result of <paramref name="maybeTask"/> if it exists</returns>
         public static async Task<T> Expect<T>(this Task<Maybe<T>> maybeTask, string message)
         {
@@ -62,7 +62,7 @@ namespace wimm.Secundatives.Extensions
         /// Helper function to apply <see cref="Expect{T}(Maybe{T})"/> in async contexts. Awaits the task containing the <see cref="Maybe{T}"/>
         /// and then applies the <see cref="Expect{T}(Maybe{T})"/> function to it.
         /// </summary>
-        /// <typeparam name="T"> The type of value contained with the <paramref name="maybe"/> </typeparam>
+        /// <typeparam name="T"> The type of value contained with the <paramref name="maybeTask"/> </typeparam>
         /// <param name="maybeTask">A task resulting in a <see cref="Maybe{T}"/> to be inspected</param>
         /// /// <exception cref="ExpectException"> <paramref name="maybeTask"/> results in <see cref="Maybe{T}.None"/></exception>
         /// <returns> The <typeparamref name="T"/> held within the result of <paramref name="maybeTask"/> if it exists</returns>
@@ -128,12 +128,10 @@ namespace wimm.Secundatives.Extensions
         /// <summary>
         /// Helper function that awaits a <see cref="Task{T}"/>'s result and converts it into a <see cref="Maybe{T}"/>
         /// </summary>
-        /// <typeparam name="T"> 
         /// <typeparam name="T"> The type that will be returned from awaiting the task and that 
         /// will be tested and the type of the resultant <see cref="Maybe{T}"/> </typeparam>
-        /// </typeparam>
-        /// <param name="value"> A <see cref="Task{T}"/> That will contain the value to be tested </param
-        /// <returns> A <see cref="Maybe{T}"/> with a value if <see cref="value.Result"/> is not <c> null </c> else 
+        /// <param name="value"> A <see cref="Task{T}"/> That will contain the value to be tested </param>
+        /// <returns> A <see cref="Maybe{T}"/> with a value if <paramref name="value"/>'s result is not <c> null </c> else 
         /// <see cref="Maybe{T}.None"/>
         /// </returns>
         public static async Task<Maybe<T>> AsMaybe<T>(this Task<T> value) where T : class
@@ -143,13 +141,13 @@ namespace wimm.Secundatives.Extensions
 
 
         /// <summary>
-        /// Helper function that awaits a <see cref="Task{Nullable{T}}"/>'s result and converts it into a <see cref="Maybe{T}"/>
+        /// Helper function that awaits a <see cref="Task{T}"/>'s nullable result and converts it into a <see cref="Maybe{T}"/>
         /// </summary>
         /// <typeparam name="T"> 
         /// The underlying type of the <see cref="Nullable{T}"/> and the type of the resultant <see cref="Maybe{T}"/>
         /// </typeparam>
-        /// <param name="value"> A <see cref="Task{T}"/> That will contain the value to be tested </param
-        /// <returns> A <see cref="Maybe{T}"/> with a value if <see cref="value.Result"/> is not <c> null </c> else 
+        /// <param name="value"> A <see cref="Task{T}"/> That will contain the value to be tested </param>
+        /// <returns> A <see cref="Maybe{T}"/> with a value if <paramref name="value"/>'s result is not <c> null </c> else 
         /// <see cref="Maybe{T}.None"/>
         /// </returns>
         public static async Task<Maybe<T>> AsMaybe<T>(this Task<T?> value) where T : struct
