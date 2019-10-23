@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using wimm.Secundatives.Extensions;
 using Xunit;
 
 namespace wimm.Secundatives.UnitTests.Extensions
@@ -42,7 +43,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var underTest = new Maybe<int>(10);
             var result = await underTest.Map(x => Task.FromResult(x.ToString()));
-            
+
             Assert.Equal("10", result.Value);
         }
 
@@ -98,8 +99,48 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var underTest = new Maybe<int>(100);
             var result = await underTest.Map(x => Task.FromResult(new Maybe<string>(x.ToString())));
-            
+
             Assert.Equal("100", result.Value);
+        }
+
+        [Fact]
+        public async Task MapTask_ValueAndFuncReturnsAsyncValue_ReturnsValue()
+        {
+            var underTest = Task.FromResult(new Maybe<int>(100));
+
+            var result = await underTest.Map(x => Task.FromResult(x.ToString()));
+
+            Assert.Equal("100", result.Value);
+        }
+
+        [Fact]
+        public async Task MapTask_NoneAndFuncReturnsAsyncValue_ReturnsNone()
+        {
+            var underTest = Task.FromResult(Maybe<int>.None);
+
+            var result = await underTest.Map(x => Task.FromResult(x.ToString()));
+
+            Assert.Equal(Maybe<string>.None, result);
+        }
+
+        [Fact]
+        public async Task MapTask_ValueAndFuncReturnsAsyncMaybe_FlattensAndReturnsValue()
+        {
+            var underTest = Task.FromResult(new Maybe<int>(100));
+
+            var result = await underTest.Map(x => Task.FromResult(x.ToString().AsMaybe()));
+
+            Assert.Equal("100", result.Value);
+        }
+
+        [Fact]
+        public async Task MapMaybe_NoneAndFuncReturnsAsyncMaybe_ReturnsNone()
+        {
+            var underTest = Task.FromResult(Maybe<int>.None);
+
+            var result = await underTest.Map(x => Task.FromResult(x.ToString().AsMaybe()));
+
+            Assert.Equal(Maybe<string>.None, result);
         }
 
     }
