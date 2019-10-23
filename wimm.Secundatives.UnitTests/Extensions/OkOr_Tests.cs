@@ -85,7 +85,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public async Task OkOrErrorTaskValue_None_ReturnsErrorValue()
         {
             var underTest = Task.FromResult(Maybe<string>.None);
-            var result = await underTest.OkOr(() => TestingEnum.BadThingsHappened);
+            var result = await underTest.OkOr(TestingEnum.BadThingsHappened);
             Assert.Equal(TestingEnum.BadThingsHappened, result.Error);
         }
 
