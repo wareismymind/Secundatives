@@ -47,23 +47,57 @@ namespace wimm.Secundatives
         /// dot-atom = [CFWS] dot-atom-text [CFWS]
         /// </summary>
         public static ParseFn DotAtom =
-            (CFWS.Optional())
+            Parser.Optional(CFWS)
                 .Then(DotAtomText)
-                .Then((CFWS.Optional()));
+                .Then(Parser.Optional(CFWS));
 
-        public static ParseFn QuotedString = s => false;
+        /// <summary>
+        /// quoted-string = [CFWS] DQUOTE *([FWS] qcontent) [FWS] DQUOTE [CFWS]
+        /// </summary>
+        public static ParseFn QuotedString =
+            Parser.Optional(CFWS)
+                .Then(Parser.Match('"'))
+                .Then(Parser.ZeroOrMore(Parser.Optional(FWS).Then(QContent)))
+                .Then(Parser.Optional(FWS))
+                .Then(Parser.Match('"'))
+                .Then(Parser.Optional(CFWS));
 
-        public static ParseFn ObsLocalPart = s => false;
+        /// <summary>
+        /// obs-local-part = word *("." word)
+        /// </summary>
+        public static ParseFn ObsLocalPart =
+            Word.Then(Parser.ZeroOrMore(Parser.Match('.').Then(Word)));
 
+        /// <summary>
+        /// domain-literal = [CFWS] "[" *([FWS] dtext) [FWS] "]" [CFWS]
+        /// </summary>
         public static ParseFn DomainLiteral = s => false;
 
+        /// <summary>
+        /// obs-domain = atom *("." atom)
+        /// </summary>
         public static ParseFn ObsDomain = s => false;
 
+        /// <summary>
+        /// dot-atom-text = 1*atext *("." 1*atext)
+        /// </summary>
         public static ParseFn DotAtomText = s => false;
+
+        /// <summary>
+        /// qcontent = qtext / quoted-pair
+        /// </summary>
+        public static ParseFn QContent = s => false;
+
+        /// <summary>
+        /// word = atom / quoted-string
+        /// </summary>
+        public static ParseFn Word = s => false;
 
 
 
         public static ParseFn CFWS = s => false;
+
+        public static ParseFn FWS = s => false;
 
     }
 
@@ -100,6 +134,20 @@ namespace wimm.Secundatives
         }
 
         public static ParseFn Match(char c) => Make((s) => s.Read() == c);
+
+        public static ParseFn Optional(ParseFn parse) => s => Make(parse)(s) || true;
+
+        public static ParseFn ZeroOrMore(ParseFn parse)
+        {
+            var p = Make(parse);
+
+            return (s) =>
+            {
+                while (p(s)) ;
+
+                return true;
+            };
+        }
     }
 
     /// <summary>
@@ -121,8 +169,6 @@ namespace wimm.Secundatives
         public static ParseFn Or(this ParseFn a, ParseFn b) => Parser.Make(s => a(s) || b(s));
 
         public static ParseFn Then(this ParseFn a, ParseFn b) => Parser.Make(s => a(s) && b(s));
-
-        public static ParseFn Optional(this ParseFn parse) => s => Parser.Make(parse)(s) || true;
 
         public static ParseFn Repeat(this ParseFn parse, int times)
         {

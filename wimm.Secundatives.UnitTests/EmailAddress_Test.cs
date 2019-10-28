@@ -59,6 +59,55 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
+        public void Optional_Fails_ParseSucceedsWithReset()
+        {
+            var stream = ResetableStream(42);
+
+            var underTest = Parser.Optional(s => false);
+
+            AssertParseSuccess(underTest, stream, 1);
+        }
+
+        [Fact]
+        public void Optional_Succeeds_ParseSucceeds()
+        {
+            var stream = new Mock<CharStream>();
+
+            var underTest = Parser.Optional(s => true);
+
+            AssertParseSuccess(underTest, stream);
+        }
+
+        [Fact]
+        public void ZeroOrMore_NoMatches_SucceedsWithOneCallAndOneReset()
+        {
+            var stream = ResetableStream(42);
+
+            var parse = new Mock<ParseFn>();
+
+            var underTest = Parser.ZeroOrMore(parse.Object);
+
+            AssertParseSuccess(underTest, stream, streamResets: 1);
+            parse.Verify(p => p.Invoke(It.IsAny<CharStream>()), Times.Once);
+        }
+
+        [Fact]
+        public void ZeroOrMore_NMatches_SucceedsWithNPlusOneCallsAndOneReset()
+        {
+            var stream = ResetableStream(42);
+
+            var parse = new Mock<ParseFn>();
+            parse.SetupSequence(p => p.Invoke(It.IsAny<CharStream>()))
+                .Returns(true)
+                .Returns(true);
+
+            var underTest = Parser.ZeroOrMore(parse.Object);
+
+            AssertParseSuccess(underTest, stream, streamResets: 1);
+            parse.Verify(p => p.Invoke(It.IsAny<CharStream>()), Times.Exactly(3));
+        }
+
+        [Fact]
         public void Complete_OriginalParseFails_ParseFails()
         {
             var stream = ResetableStream(42);
@@ -150,26 +199,7 @@ namespace wimm.Secundatives.UnitTests
             AssertParseSuccess(underTest, stream);
         }
 
-        [Fact]
-        public void Optional_Fails_ParseSucceedsWithReset()
-        {
-            var stream = ResetableStream(42);
-
-            var underTest = new ParseFn(s => false).Optional();
-
-            AssertParseSuccess(underTest, stream, 1);
-        }
-
-        [Fact]
-        public void Optional_Succeeds_ParseSucceeds()
-        {
-            var stream = new Mock<CharStream>();
-
-            var underTest = new ParseFn(s => true).Optional();
-
-            AssertParseSuccess(underTest, stream);
-        }
-
+        
         [Fact]
         public void Repeat_ZeroTimes_ParseSucceeds()
         {
