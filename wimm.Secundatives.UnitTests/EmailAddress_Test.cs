@@ -4,6 +4,38 @@ using Xunit;
 
 namespace wimm.Secundatives.UnitTests
 {
+    public class EmailAddress_Test
+    {
+        [Fact]
+        public void Construct_SaneEmail_Constructs()
+        {
+            var localPart = "sohn.jmith";
+            var domain = "cmail.gom";
+
+            var underTest = new EmailAddress(localPart, domain);
+
+            Assert.Equal(localPart, underTest.LocalPart);
+        }
+
+        [Fact]
+        public void Construct_InsaneEmail_AlsoConstructsBecauseWtf()
+        {
+
+        }
+
+        [Fact]
+        public void Construct_ArbitrarilyInvalidEmail_Throws()
+        {
+            var localPart = "so@hn.jmith";
+            var domain = "cmail.gom";
+
+            Assert.Throws<FormatException>(() =>
+            {
+                var _ = new EmailAddress(localPart, domain);
+            });
+        }
+    }
+
     public class Parser_Test
     {
         [Fact]
@@ -37,6 +69,16 @@ namespace wimm.Secundatives.UnitTests
         }
 
         [Fact]
+        public void Match_NoNextChar_ParseFails()
+        {
+            var stream = ResetableStream(42);
+
+            var underTest = Parser.Match('a');
+
+            AssertParseFailure(underTest, stream);
+        }
+
+        [Fact]
         public void Match_NextCharDoesNotMatch_ParseFails()
         {
             var stream = ResetableStream(42);
@@ -54,6 +96,70 @@ namespace wimm.Secundatives.UnitTests
             stream.Setup(s => s.Read()).Returns('a');
 
             var underTest = Parser.Match('a');
+
+            AssertParseSuccess(underTest, stream);
+        }
+
+        [Fact]
+        public void AnyOf_NoNextChar_ParseFails()
+        {
+            var stream = ResetableStream(42);
+
+            var underTest = Parser.AnyOf("aeiou");
+
+            AssertParseFailure(underTest, stream);
+        }
+
+        [Fact]
+        public void AnyOf_NextCharNotInString_ParseFails()
+        {
+            var stream = ResetableStream(42);
+            stream.Setup(s => s.Read()).Returns('b');
+
+            var underTest = Parser.AnyOf("aeiou");
+
+            AssertParseFailure(underTest, stream);
+        }
+
+        [Fact]
+        public void AnyOf_NextCharInString_ParseSucceeds()
+        {
+            var stream = ResetableStream(42);
+            stream.Setup(s => s.Read()).Returns('a');
+
+            var underTest = Parser.AnyOf("aeiou");
+
+            AssertParseSuccess(underTest, stream);
+        }
+
+        [Fact]
+        public void InRange_NoNextChar_ParseFails()
+        {
+            var stream = ResetableStream(42);
+
+            var underTest = Parser.InRange('a', 'z');
+
+            AssertParseFailure(underTest, stream);
+        }
+
+        [Fact]
+        public void InRange_NextCharNotInRange_ParseFails()
+        {
+            var stream = ResetableStream(42);
+            stream.Setup(s => s.Read()).Returns('G');
+
+            var underTest = Parser.InRange('a', 'z');
+
+            AssertParseFailure(underTest, stream);
+        }
+
+        [Fact]
+        public void InRange_NextCharInRange_ParseSucceeds()
+        {
+            var stream = ResetableStream(42);
+            stream.Setup(s => s.Read()).Returns('g');
+
+            var underTest = Parser.InRange('a', 'z');
 
             AssertParseSuccess(underTest, stream);
         }
@@ -238,6 +344,66 @@ namespace wimm.Secundatives.UnitTests
 
             AssertParseSuccess(underTest, stream);
             parse.Verify(p => p.Invoke(It.IsAny<CharStream>()), Times.Exactly(3));
+        }
+
+        [Fact]
+        public void AtLeast_ParsersFewerThanMinTimes_ParseFails()
+        {
+            var stream = ResetableStream(42);
+
+            var parse = new Mock<ParseFn>();
+            parse.SetupSequence(s => s.Invoke(It.IsAny<CharStream>()))
+                .Returns(true)
+                .Returns(true);
+
+            var underTest = parse.Object.AtLeast(3);
+
+            // Three resets are performed by the Repeat, the Then, then the AtLeast
+            // TODO: Update reset assertions to use unique numbers and test that the final reset
+            // is to the right place.
+            AssertParseFailure(underTest, stream, 3);
+            parse.Verify(p => p.Invoke(It.IsAny<CharStream>()), Times.Exactly(3));
+        }
+
+        [Fact]
+        public void AtLeast_ParsersMinTimes_ParseSucceeds()
+        {
+            var stream = ResetableStream(42);
+
+            var parse = new Mock<ParseFn>();
+            parse.SetupSequence(s => s.Invoke(It.IsAny<CharStream>()))
+                .Returns(true)
+                .Returns(true)
+                .Returns(true);
+
+            var underTest = parse.Object.AtLeast(3);
+
+            // Three resets are performed by the Repeat, the Then, then the AtLeast
+            // TODO: Update reset assertions to use unique numbers and test that the final reset
+            // is to the right place.
+            AssertParseSuccess(underTest, stream, 1);
+            parse.Verify(p => p.Invoke(It.IsAny<CharStream>()), Times.Exactly(4));
+        }
+
+        [Fact]
+        public void AtLeast_ParsersMoreThanMinTimes_ParseSucceeds()
+        {
+            var stream = ResetableStream(42);
+
+            var parse = new Mock<ParseFn>();
+            parse.SetupSequence(s => s.Invoke(It.IsAny<CharStream>()))
+                .Returns(true)
+                .Returns(true)
+                .Returns(true)
+                .Returns(true);
+
+            var underTest = parse.Object.AtLeast(3);
+
+            // Three resets are performed by the Repeat, the Then, then the AtLeast
+            // TODO: Update reset assertions to use unique numbers and test that the final reset
+            // is to the right place.
+            AssertParseSuccess(underTest, stream, 1);
+            parse.Verify(p => p.Invoke(It.IsAny<CharStream>()), Times.Exactly(5));
         }
 
         private void AssertParseSuccess(ParseFn parse, Mock<CharStream> stream) =>
