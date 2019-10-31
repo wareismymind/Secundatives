@@ -159,18 +159,18 @@ namespace wimm.Secundatives.Extensions
         /// <typeparam name="T">
         /// The value type of of the <see cref="Maybe{T}"/> expressions.
         /// </typeparam>
-        /// <param name="a">The first <see cref="Maybe{T}"/> to inspect for existance.</param>
-        /// <param name="b">
+        /// <param name="primary">The first <see cref="Maybe{T}"/> to inspect for existance.</param>
+        /// <param name="alternate">
         /// A <see cref="Func{T}"/> returning the <see cref="Maybe{T}"/> to return if
-        /// <paramref name="a"/> does not exist.
+        /// <paramref name="primary"/> does not exist.
         /// </param>
         /// <returns>
-        /// <paramref name="a"/> if it exists, otherwise the result of evaluating
-        /// <paramref name="b"/>. NOTE: It's possible that the result of evaluating
-        /// <paramref name="b"/> will not exist.
+        /// <paramref name="primary"/> if it exists, otherwise the result of evaluating
+        /// <paramref name="alternate"/>. NOTE: It's possible that the result of evaluating
+        /// <paramref name="alternate"/> will not exist.
         /// </returns>
-        public static Maybe<T> Or<T>(this Maybe<T> a, Func<Maybe<T>> b) =>
-            a.Exists ? a : b();
+        public static Maybe<T> Or<T>(this Maybe<T> primary, Func<Maybe<T>> alternate) =>
+            primary.Exists ? primary : alternate();
 
         /// <summary>
         /// Builds a <see cref="Task{T}"/> that executes a chain of <see cref="Maybe{T}"/>
@@ -179,17 +179,17 @@ namespace wimm.Secundatives.Extensions
         /// <typeparam name="T">
         /// The value type of of the <see cref="Maybe{T}"/> expressions.
         /// </typeparam>
-        /// <param name="a">The first <see cref="Maybe{T}"/> to inspect for existance.</param>
-        /// <param name="b">
+        /// <param name="primary">The first <see cref="Maybe{T}"/> to inspect for existance.</param>
+        /// <param name="alternate">
         /// A <see cref="Func{T}"/> returning a <see cref="Task{T}"/> that produces the
-        /// <see cref="Maybe{T}"/> to return if <paramref name="a"/> does not exist.
+        /// <see cref="Maybe{T}"/> to return if <paramref name="primary"/> does not exist.
         /// </param>
-        /// <returns><paramref name="a"/> if it exists, otherwise the result of evaluating
-        /// <paramref name="b"/>. NOTE: It's possible that the result of evaluating
-        /// <paramref name="b"/> will not exist.
+        /// <returns><paramref name="primary"/> if it exists, otherwise the result of evaluating
+        /// <paramref name="alternate"/>. NOTE: It's possible that the result of evaluating
+        /// <paramref name="alternate"/> will not exist.
         /// </returns>
-        public static Task<Maybe<T>> Or<T>(this Maybe<T> a, Func<Task<Maybe<T>>> b) =>
-            a.Exists ? Task.FromResult(a) : b();
+        public static async Task<Maybe<T>> Or<T>(this Maybe<T> primary, Func<Task<Maybe<T>>> alternate) =>
+            primary.Exists ? primary : await alternate();
 
         /// <summary>
         /// Builds a <see cref="Task{T}"/> that executes a chain of <see cref="Maybe{T}"/>
@@ -198,23 +198,20 @@ namespace wimm.Secundatives.Extensions
         /// <typeparam name="T">
         /// The value type of of the <see cref="Maybe{T}"/> expressions.
         /// </typeparam>
-        /// <param name="a">
+        /// <param name="primary">
         /// A <see cref="Task{T}"/> producing the first <see cref="Maybe{T}"/> to inspect for
         /// existance.
         /// </param>
-        /// <param name="b">
+        /// <param name="alternate">
         /// A <see cref="Func{T}"/> returning the <see cref="Maybe{T}"/> to return if the result of
-        /// evaluationg <paramref name="a"/> does not exist.
+        /// evaluationg <paramref name="primary"/> does not exist.
         /// </param>
-        /// <returns>The result of evaluating <paramref name="a"/> if it exists, otherwise the
-        /// result of evaluating <paramref name="b"/>. NOTE: It's possible that the result of
-        /// evaluating <paramref name="b"/> will not exist.
+        /// <returns>The result of evaluating <paramref name="primary"/> if it exists, otherwise the
+        /// result of evaluating <paramref name="alternate"/>. NOTE: It's possible that the result of
+        /// evaluating <paramref name="alternate"/> will not exist.
         /// </returns>
-        public static async Task<Maybe<T>> Or<T>(this Task<Maybe<T>> a, Func<Maybe<T>> b)
-        {
-            var first = await a;
-            return first.Exists ? first : b();
-        }
+        public static async Task<Maybe<T>> Or<T>(this Task<Maybe<T>> primary, Func<Maybe<T>> alternate) =>
+            (await primary).Or(alternate);
 
         /// <summary>
         /// Builds a <see cref="Task{T}"/> that executes a chain of <see cref="Maybe{T}"/>
@@ -223,23 +220,20 @@ namespace wimm.Secundatives.Extensions
         /// <typeparam name="T">
         /// The value type of of the <see cref="Maybe{T}"/> expressions.
         /// </typeparam>
-        /// <param name="a">
+        /// <param name="primary">
         /// A <see cref="Task{T}"/> producing the first <see cref="Maybe{T}"/> to inspect for
         /// existance.
         /// </param>
-        /// <param name="b">
+        /// <param name="alternate">
         /// A <see cref="Func{T}"/> returning a <see cref="Task{T}"/> to produce the
-        /// <see cref="Maybe{T}"/> to return if the result of evaluationg <paramref name="a"/> does
+        /// <see cref="Maybe{T}"/> to return if the result of evaluationg <paramref name="primary"/> does
         /// not exist.
         /// </param>
-        /// <returns>The result of evaluating <paramref name="a"/> if it exists, otherwise the
-        /// result of evaluating <paramref name="b"/>. NOTE: It's possible that the result of
-        /// evaluating <paramref name="b"/> will not exist.
+        /// <returns>The result of evaluating <paramref name="primary"/> if it exists, otherwise the
+        /// result of evaluating <paramref name="alternate"/>. NOTE: It's possible that the result of
+        /// evaluating <paramref name="alternate"/> will not exist.
         /// </returns>
-        public static async Task<Maybe<T>> Or<T>(this Task<Maybe<T>> a, Func<Task<Maybe<T>>> b)
-        {
-            var first = await a;
-            return first.Exists ? first : await b();
-        }
+        public static async Task<Maybe<T>> Or<T>(this Task<Maybe<T>> primary, Func<Task<Maybe<T>>> alternate) =>
+            await (await primary).Or(alternate);
     }
 }

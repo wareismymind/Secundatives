@@ -12,9 +12,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         [Fact]
         public void Or_MaybeFunc_NeitherMaybeExists_ReturnsNone()
         {
-            Assert.Equal(
-                Maybe<int>.None,
-                Maybe<int>.None.Or(() => Maybe<int>.None));
+            Assert.Equal(Maybe<int>.None, Maybe<int>.None.Or(() => Maybe<int>.None));
         }
 
         [Fact]
@@ -22,9 +20,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(
-                expected,
-                Maybe<int>.None.Or(() => expected));
+            Assert.Equal(expected, Maybe<int>.None.Or(() => expected));
         }
 
         [Fact]
@@ -32,9 +28,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(
-                expected,
-                expected.Or(() => Maybe<int>.None));
+            Assert.Equal(expected,  expected.Or(() => Maybe<int>.None));
         }
 
         [Fact]
@@ -42,9 +36,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(
-                expected,
-                expected.Or(() => new Maybe<int>(43)));
+            Assert.Equal(expected, expected.Or(() => new Maybe<int>(43)));
         }
 
         [Fact]
@@ -53,9 +45,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var expected = new Maybe<int>(42);
             var func = new Mock<Func<Maybe<int>>>();
 
-            Assert.Equal(
-                expected,
-                expected.Or(func.Object));
+            Assert.Equal(expected, expected.Or(func.Object));
 
             func.Verify(f => f.Invoke(), Times.Never);
         }
@@ -64,8 +54,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public async Task Or_MaybeFuncTask_NeitherMaybeExists_ReturnsNone()
         {
             Assert.Equal(
-                Maybe<int>.None,
-                await Maybe<int>.None.Or(() => Task.FromResult(Maybe<int>.None)));
+                Maybe<int>.None, await Maybe<int>.None.Or(() => Task.FromResult(Maybe<int>.None)));
         }
 
         [Fact]
@@ -73,9 +62,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(
-                expected,
-                await Maybe<int>.None.Or(() => Task.FromResult(expected)));
+            Assert.Equal(expected,  await Maybe<int>.None.Or(() => Task.FromResult(expected)));
         }
 
         [Fact]
@@ -83,9 +70,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(
-                expected,
-                await expected.Or(() => Task.FromResult(Maybe<int>.None)));
+            Assert.Equal(expected, await expected.Or(() => Task.FromResult(Maybe<int>.None)));
         }
 
         [Fact]
@@ -93,9 +78,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(
-                expected,
-                await expected.Or(() => Task.FromResult(new Maybe<int>(43))));
+            Assert.Equal(expected, await expected.Or(() => Task.FromResult(new Maybe<int>(43))));
         }
 
         [Fact]
@@ -104,9 +87,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var expected = new Maybe<int>(42);
             var func = new Mock<Func<Task<Maybe<int>>>>();
 
-            Assert.Equal(
-                expected,
-                await expected.Or(func.Object));
+            Assert.Equal(expected, await expected.Or(func.Object));
 
             func.Verify(f => f.Invoke(), Times.Never);
         }
@@ -115,8 +96,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public async Task Or_TaskMaybeFunc_NeitherMaybeExists_ReturnsNone()
         {
             Assert.Equal(
-                Maybe<int>.None,
-                await Task.FromResult(Maybe<int>.None).Or(() => Maybe<int>.None));
+                Maybe<int>.None, await Task.FromResult(Maybe<int>.None).Or(() => Maybe<int>.None));
         }
 
         [Fact]
@@ -124,9 +104,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(
-                expected,
-                await Task.FromResult(Maybe<int>.None).Or(() => expected));
+            Assert.Equal(expected, await Task.FromResult(Maybe<int>.None).Or(() => expected));
         }
 
         [Fact]
@@ -134,9 +112,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(
-                expected,
-                await Task.FromResult(expected).Or(() => Maybe<int>.None));
+            Assert.Equal(expected, await Task.FromResult(expected).Or(() => Maybe<int>.None));
         }
 
         [Fact]
@@ -144,9 +120,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(
-                expected,
-                await Task.FromResult(expected).Or(() => new Maybe<int>(43)));
+            Assert.Equal(expected, await Task.FromResult(expected).Or(() => new Maybe<int>(43)));
         }
 
         [Fact]
@@ -155,9 +129,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var expected = new Maybe<int>(42);
             var func = new Mock<Func<Maybe<int>>>();
 
-            Assert.Equal(
-                expected,
-                await Task.FromResult(expected).Or(func.Object));
+            Assert.Equal(expected, await Task.FromResult(expected).Or(func.Object));
 
             func.Verify(f => f.Invoke(), Times.Never);
         }
@@ -206,9 +178,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var expected = new Maybe<int>(42);
             var func = new Mock<Func<Task<Maybe<int>>>>();
 
-            Assert.Equal(
-                expected,
-                await Task.FromResult(expected).Or(func.Object));
+            Assert.Equal(expected,  await Task.FromResult(expected).Or(func.Object));
 
             func.Verify(f => f.Invoke(), Times.Never);
         }
