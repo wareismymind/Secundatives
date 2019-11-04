@@ -142,6 +142,5 @@ namespace wimm.Secundatives.UnitTests.Extensions
 
             Assert.Equal(Maybe<string>.None, result);
         }
-
     }
 }
