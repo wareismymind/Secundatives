@@ -82,6 +82,16 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(_message, ex.Message);
         }
 
+        [Fact]
+        public async Task ExpectTaskMessage_Value_ThrowsWithMessage()
+        {
+            var underTest = Task.FromResult(new Maybe<int>(10));
+            var ex = await Assert.ThrowsAsync<ExpectException>(() => underTest.Expect(_message));
+
+            Assert.Equal(_message, ex.Message);
+        }
+
+
 
     }
 }
