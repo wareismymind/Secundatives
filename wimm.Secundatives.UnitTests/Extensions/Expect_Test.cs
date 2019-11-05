@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using wimm.Secundatives.Exceptions;
 using wimm.Secundatives.Extensions;
@@ -18,14 +15,14 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public void ExpectMessage_NullMessage_Throws()
         {
             var underTest = new Maybe<string>(_valid);
-            Assert.Throws<ArgumentNullException>("message",() => underTest.Expect(null));
+            Assert.Throws<ArgumentNullException>("message", () => underTest.Expect(null));
         }
 
         [Fact]
         public void ExpectMessage_WhiteSpaceMessage_Throws()
         {
             var underTest = new Maybe<string>(_valid);
-            Assert.Throws<ArgumentException>("message",() => underTest.Expect(" \t\r\n"));
+            Assert.Throws<ArgumentException>("message", () => underTest.Expect(" \t\r\n"));
         }
 
 
@@ -81,6 +78,14 @@ namespace wimm.Secundatives.UnitTests.Extensions
 
             Assert.Equal(_message, ex.Message);
         }
+
+        [Fact]
+        public async Task ExpectTaskMessage_Value_ReturnsValue()
+        {
+            var underTest = Task.FromResult(new Maybe<int>(10));
+            Assert.Equal(10, await underTest.Expect(_message));
+        }
+
 
 
     }

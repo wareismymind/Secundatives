@@ -74,6 +74,12 @@ namespace wimm.Secundatives.UnitTests
             Assert.True(intVariant.Is<int>());
         }
 
+        [Fact]
+        public void Construct_TwoTypesInSameHeirarchy_ThrowsTypeInitException()
+        {
+            Assert.Throws<TypeInitializationException>(() => new Variant<Base, Derived>(new Base()));
+        }
+
         private Variant<int, string> ConstructString()
         {
             return new Variant<int, string>(_testString);
@@ -83,6 +89,8 @@ namespace wimm.Secundatives.UnitTests
         {
             return new Variant<int, string>(42);
         }
+
+
 
         class Base { }
         class Derived : Base { }
