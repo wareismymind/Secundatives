@@ -97,7 +97,26 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var result = await underTest.OkOr(TestingEnum.BadThingsHappened);
 
             Assert.Equal("doot", result.Value);
+        }
 
+        [Fact]
+        public async Task OkOrErrorTaskValue_ResultMemberIsNone_ReturnsErrorValuedResult()
+        {
+            var underTest = Task.FromResult(Maybe<Result<string, TestingEnum>>.None);
+            var result = await underTest.OkOr(TestingEnum.BadThingsHappened);
+            
+            Assert.Equal(TestingEnum.BadThingsHappened, result.Error);
+
+        }
+
+        [Fact]
+        public async Task OkOrErrorTaskFunc_ResultMemberExists_ReturnsInternalResult()
+        {
+            var input = new Result<string, TestingEnum>("doot");
+            var underTest = Task.FromResult(new Maybe<Result<string, TestingEnum>>(input));
+            var result = await underTest.OkOr(() => TestingEnum.BadThingsHappened);
+
+            Assert.Equal("doot", result.Value);
         }
 
         [Fact]

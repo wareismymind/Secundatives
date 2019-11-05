@@ -30,7 +30,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public async Task MapResult_IsSuccessAndFuncReturnsTask_ReturnsResultOfFunc()
         {
             var underTest = ConstructWith("doot");
-            var res = await underTest.Map(async x => await Task.FromResult("skeleton"));
+            var res = await underTest.Map(x => Task.FromResult("skeleton"));
 
             Assert.Equal("skeleton", res.Value);
         }
@@ -39,7 +39,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public async Task MapResult_IsErrorAndFuncReturnsTask_ReturnsError()
         {
             var underTest = new Result<string, TestError>(TestError.Sadness);
-            var res = await underTest.Map(async x => await Task.FromResult("skeleton"));
+            var res = await underTest.Map(x => Task.FromResult("skeleton"));
 
             Assert.True(res.IsError);
             Assert.Equal(TestError.Sadness, res.Error);
@@ -54,7 +54,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal("skeleton", res.Value);
         }
 
-        //
         [Fact]
         public async Task MapTaskResult_IsErrorAndFuncReturnsValue_ReturnsError()
         {
@@ -70,7 +69,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public async Task MapTaskResult_IsSuccessAndFuncReturnsTask_ReturnsResultOfFunc()
         {
             var underTest = Task.FromResult(ConstructWith("doot"));
-            var res = await underTest.Map(async x => await Task.FromResult("skeleton"));
+            var res = await underTest.Map(x => Task.FromResult("skeleton"));
 
             Assert.Equal("skeleton", res.Value);
         }
@@ -79,18 +78,17 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public async Task MapTaskResult_IsErrorAndFuncReturnsTask_ReturnsError()
         {
             var underTest = Task.FromResult(new Result<string, TestError>(TestError.Sadness));
-            var res = await underTest.Map(async x => await Task.FromResult("skeleton"));
+            var res = await underTest.Map(x => Task.FromResult("skeleton"));
 
             Assert.True(res.IsError);
             Assert.Equal(TestError.Sadness, res.Error);
         }
 
-        //
         [Fact]
         public async Task MapResult_IsSuccessAndFuncReturnsTaskResult_ReturnsResultOfFunc()
         {
             var underTest = ConstructWith("doot");
-            var res = await underTest.Map(async x => await Task.FromResult(ConstructWith("skeleton")));
+            var res = await underTest.Map(x => Task.FromResult(ConstructWith("skeleton")));
 
             Assert.Equal("skeleton", res.Value);
         }
@@ -99,7 +97,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public async Task MapResult_IsErrorAndFuncReturnsTaskResult_ReturnsError()
         {
             var underTest = new Result<string, TestError>(TestError.Sadness);
-            var res = await underTest.Map(async x => await Task.FromResult(ConstructWith("skeleton")));
+            var res = await underTest.Map(x => Task.FromResult(ConstructWith("skeleton")));
 
             Assert.True(res.IsError);
             Assert.Equal(TestError.Sadness, res.Error);
@@ -110,7 +108,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public async Task MapTaskResult_IsSuccessAndFuncReturnsTaskResult_ReturnsResultOfFunc()
         {
             var underTest = Task.FromResult(ConstructWith("doot"));
-            var res = await underTest.Map(async x => await Task.FromResult(ConstructWith("skeleton")));
+            var res = await underTest.Map(x => Task.FromResult(ConstructWith("skeleton")));
 
             Assert.Equal("skeleton", res.Value);
         }
@@ -119,7 +117,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public async Task MapTaskResult_IsErrorAndFuncReturnsTaskResult_ReturnsError()
         {
             var underTest = Task.FromResult(new Result<string, TestError>(TestError.Sadness));
-            var res = await underTest.Map(async x => await Task.FromResult(ConstructWith("skeleton")));
+            var res = await underTest.Map(x => Task.FromResult(ConstructWith("skeleton")));
 
             Assert.True(res.IsError);
             Assert.Equal(TestError.Sadness, res.Error);
