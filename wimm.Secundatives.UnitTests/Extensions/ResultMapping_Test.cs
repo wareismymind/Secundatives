@@ -163,6 +163,24 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal("doot", res.Value);
         }
 
+        [Fact]
+        public void MapOr_IsSuccess_ReturnsResultOfFunc()
+        {
+            var underTest = ConstructWith(1);
+            var res = underTest.MapOr(_ => "deet", _ => OtherError.OtherSadness.ToString());
+
+            Assert.Equal("deet", res);
+        }
+
+
+        [Fact]
+        public void MapOr_IsError_ReturnsResultOfErrorFunc()
+        {
+            var underTest = new Result<string, TestError>(TestError.Sadness);
+            var res = underTest.MapOr(_ => "deet", _ => OtherError.OtherSadness.ToString());
+
+            Assert.Equal(OtherError.OtherSadness.ToString(), res);
+        }
 
         private Result<T, TestError> ConstructWith<T>(T value)
         {

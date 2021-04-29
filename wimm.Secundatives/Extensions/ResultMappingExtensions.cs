@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace wimm.Secundatives
@@ -125,7 +122,7 @@ namespace wimm.Secundatives
             return result.Error;
         }
 
-        
+
         /// <summary>
         /// Asynchronously transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying an async function and collapsing
         /// the result if the mapped  <see cref="Result{T, TError}"/> containts a value otherwise by constructing a new 
@@ -197,5 +194,24 @@ namespace wimm.Secundatives
             return val.MapError(func);
         }
 
+        /// <summary>
+        /// Transforms a <see cref="Result{T, TError}"/> into a <typeparamref name="U"/> by applying a function if the mapped
+        /// <see cref="Result{T, TError}"/> containts a value, otherwise by applying a function to the 
+        /// <typeparamref name="TError"/> contained within <paramref name="result"/>
+        /// </summary>
+        /// <typeparam name="T"> The success type of the initial result </typeparam>
+        /// <typeparam name="U"> The type that <paramref name="result"/>'s value and error are transformed to by
+        /// <paramref name="valueFunc"/> and  <paramref name="errorFunc"/> </typeparam>
+        /// <typeparam name="TError"> The error type of the results</typeparam>
+        /// <param name="result"> A <see cref="Result{T, TError}"/> whose state determines which function is applied </param>
+        /// <param name="valueFunc"> The function that will transform <paramref name="result"/>'s <typeparamref name="T"/> if it exists</param>
+        /// <param name="errorFunc"> The function that will transform <paramref name="result"/>'s <typeparamref name="TError"/> if it exists</param>
+        /// <returns> A <typeparamref name="U"/> that is returned by calling <paramref name="valueFunc"/> on the value of <paramref
+        /// name="result"/> or by calling <paramref name="errorFunc"/> on the error from <paramref name="result"/>
+        /// </returns>
+        public static U MapOr<T, U, TError>(this Result<T, TError> result, Func<T, U> valueFunc, Func<TError, U> errorFunc)
+        {
+            return result.IsValue ? valueFunc(result.Value) : errorFunc(result.Error);
+        }
     }
 }
