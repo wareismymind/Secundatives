@@ -201,8 +201,8 @@ namespace wimm.Secundatives
         /// </summary>
         /// <typeparam name="T"> The success type of the initial result </typeparam>
         /// <typeparam name="U"> The type that <paramref name="result"/>'s value and error are transformed to by
-        /// <paramref name="valueFunc"/> and  <paramref name="errorFunc"/> </typeparam>
-        /// <typeparam name="TError"> The error type of the results</typeparam>
+        /// <paramref name="valueFunc"/> and <paramref name="errorFunc"/> </typeparam>
+        /// <typeparam name="TError"> The error type of the result </typeparam>
         /// <param name="result"> A <see cref="Result{T, TError}"/> whose state determines which function is applied </param>
         /// <param name="valueFunc"> The function that will transform <paramref name="result"/>'s <typeparamref name="T"/> if it exists</param>
         /// <param name="errorFunc"> The function that will transform <paramref name="result"/>'s <typeparamref name="TError"/> if it exists</param>
