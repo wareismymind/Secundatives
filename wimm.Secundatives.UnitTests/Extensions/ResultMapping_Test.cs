@@ -153,7 +153,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(OtherError.OtherSadness, res.Error);
         }
 
-
         [Fact]
         public async Task MapErrorTask_IsSuccessAndFuncReturnsValue_ReturnsValue()
         {
