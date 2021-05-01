@@ -23,5 +23,5 @@ jobs:
           dotnet restore
           $VERSION =  $("${{github.ref}}" -split "/")[-1].Substring(1)
           dotnet pack --configuration Release --output ./pack /p:PackageVersion=$VERSION
-          dotnet nuget push ./pack/*.nupkg --api-key ${{ secrets.NUGET_TOKEN }}
+          dotnet nuget push ./pack/*.nupkg -s https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_TOKEN }}
         shell: pwsh

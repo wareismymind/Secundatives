@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -31,5 +31,4 @@
   <ItemGroup>
     <ProjectReference Include="..\wimm.Secundatives\wimm.Secundatives.csproj" />
   </ItemGroup>
-
 </Project>
