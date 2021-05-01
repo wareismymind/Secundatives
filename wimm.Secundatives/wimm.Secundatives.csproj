@@ -5,6 +5,13 @@
     <Description>A collection of types slightly more advanced than primitives.</Description>
     <Authors>Chris Nantau, Thomas Showers</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Authors>Thomas Showers, Chris Nantau</Authors>
+    <Company>wareismymind</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/wareismymind/Secundatives</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/wareismymind/Secundatives</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
