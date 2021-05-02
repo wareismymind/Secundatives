@@ -45,8 +45,11 @@ namespace wimm.Secundatives
         {
         }
 
+        //CN(justification): These operators are trivial and their documentation would just be code bloat
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static implicit operator Result<T, TError>(T value) => new Result<T, TError>(value);
         public static implicit operator Result<T, TError>(TError error) => new Result<T, TError>(error);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
 
@@ -73,9 +76,11 @@ namespace wimm.Secundatives
         {
         }
 
+        //CN(justification): These operators are trivial and their documentation would just be code bloat
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static implicit operator Result<T>(T value) => new Result<T>(value);
         public static implicit operator Result<T>(Error error) => new Result<T>(error);
-
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
 }

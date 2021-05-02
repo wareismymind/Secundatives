@@ -79,8 +79,11 @@ namespace wimm.Secundatives
             _value = value;
         }
 
+        //CN(justification): These operators are trivial and their documentation would just be code bloat
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static implicit operator Variant<T, U>(T val) => new Variant<T, U>(val);
         public static implicit operator Variant<T, U>(U val) => new Variant<T, U>(val);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
 
         private bool IsAssignableFromMemberType(Type type)
