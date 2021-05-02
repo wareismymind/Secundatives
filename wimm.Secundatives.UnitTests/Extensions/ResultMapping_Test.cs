@@ -164,7 +164,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         }
 
 
-        private Result<T, TestError> ConstructWith<T>(T value)
+        private static Result<T, TestError> ConstructWith<T>(T value)
         {
             return new Result<T, TestError>(value);
         }

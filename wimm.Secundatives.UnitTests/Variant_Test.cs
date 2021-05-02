@@ -80,12 +80,12 @@ namespace wimm.Secundatives.UnitTests
             Assert.Throws<TypeInitializationException>(() => new Variant<Base, Derived>(new Base()));
         }
 
-        private Variant<int, string> ConstructString()
+        private static Variant<int, string> ConstructString()
         {
             return new Variant<int, string>(_testString);
         }
 
-        private Variant<int, string> ConstructInt()
+        private static Variant<int, string> ConstructInt()
         {
             return new Variant<int, string>(42);
         }

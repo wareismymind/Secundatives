@@ -6,7 +6,7 @@ namespace wimm.Secundatives.UnitTests
 {
     public class TestHelpers
     {
-        private static readonly List<string> _stringControls = new List<string> { "\t", "\r", "\n", " " };
+        private static readonly List<string> _stringControls = new() { "\t", "\r", "\n", " " };
 
 
         public static void AssertThrowsIfWhitespace(Action<string> action)

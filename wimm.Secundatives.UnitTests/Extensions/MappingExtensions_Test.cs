@@ -44,13 +44,31 @@ namespace wimm.Secundatives.UnitTests.Extensions
         }
 
         [Fact]
-        public void MapMaybe_NoneAndFuncReturnsMaybe_ReturnsNone()
+        public void MapMaybe_NoneAndFuncReturnsMaybeWithValue_ReturnsNone()
         {
             var underTest = Maybe<int>.None;
             var result = underTest.Map(x => new Maybe<string>((x + 100).ToString()));
 
             Assert.Equal(Maybe<string>.None, result);
 
+        }
+
+        [Fact]
+        public void MapMaybe_ValueAndFuncReturnsMaybeWithValue_ReturnsMappedValue()
+        {
+            var underTest = new Maybe<int>(10);
+            var result = underTest.Map(x => new Maybe<string>((x + 100).ToString()));
+
+            Assert.Equal("110", result.Value);
+        }
+
+        [Fact]
+        public void MapMaybe_ValueAndFuncReturnsMaybeWithNone_ReturnsNone()
+        {
+            var underTest = new Maybe<int>(10);
+            var result = underTest.Map(x => new Maybe<string>());
+
+            Assert.Equal(Maybe<string>.None, result);
         }
 
         [Fact]
