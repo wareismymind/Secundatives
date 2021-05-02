@@ -49,7 +49,7 @@ namespace wimm.Secundatives.UnitTests
             var underTest = ConstructString();
             Assert.Equal(_testString, underTest.Get<string>());
         }
-        
+
         [Fact]
         public void IsString_ContainsString_ReturnsTrue()
         {

@@ -125,7 +125,7 @@ namespace wimm.Secundatives
             return result.Error;
         }
 
-        
+
         /// <summary>
         /// Asynchronously transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying an async function and collapsing
         /// the result if the mapped  <see cref="Result{T, TError}"/> containts a value otherwise by constructing a new 

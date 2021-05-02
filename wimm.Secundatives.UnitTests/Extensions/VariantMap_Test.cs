@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Xunit;
 using wimm.Secundatives.Extensions;
+using Xunit;
 
 namespace wimm.Secundatives.UnitTests.Extensions
 {
@@ -41,12 +41,12 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(-1, i);
         }
 
-        public Variant<int,string> ConstructInt()
+        public Variant<int, string> ConstructInt()
         {
             return new Variant<int, string>(42);
         }
 
-        public Variant<int,string> ConstructString()
+        public Variant<int, string> ConstructString()
         {
             return new Variant<int, string>("doot");
         }
