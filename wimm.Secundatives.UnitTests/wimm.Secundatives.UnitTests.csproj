@@ -34,5 +34,4 @@
   <ItemGroup>
     <ProjectReference Include="..\wimm.Secundatives\wimm.Secundatives.csproj" />
   </ItemGroup>
-
 </Project>
