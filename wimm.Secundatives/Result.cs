@@ -1,5 +1,4 @@
 ﻿using System;
-using wimm.Secundatives.Extensions;
 
 namespace wimm.Secundatives
 {

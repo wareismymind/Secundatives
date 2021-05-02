@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using wimm.Secundatives.Extensions;
+﻿using wimm.Secundatives.Extensions;
 using Xunit;
 
 namespace wimm.Secundatives.UnitTests.Extensions
@@ -27,7 +23,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public void MapAction_ValueInt_ExecutesIntAction()
         {
             var underTest = ConstructInt();
-            int i = 0;
+            var i = 0;
             underTest.MapAction(x => i++, y => i--);
             Assert.Equal(1, i);
         }
@@ -36,7 +32,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public void MapAction_ValueString_ExecutesStringAction()
         {
             var underTest = ConstructString();
-            int i = 0;
+            var i = 0;
             underTest.MapAction(x => i++, y => i--);
             Assert.Equal(-1, i);
         }
