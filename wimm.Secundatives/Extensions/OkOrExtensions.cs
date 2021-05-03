@@ -4,9 +4,12 @@ using wimm.Secundatives.Extensions;
 
 namespace wimm.Secundatives
 {
+    /// <summary>
+    /// Methods that convert <see cref="Maybe{T}"/> to <see cref="Result{T, TError}"/> by providing an error value in the case that
+    /// the <see cref="Maybe{T}"/> is <see cref="None"/>
+    /// </summary>
     public static class OkOrExtensions
     {
-
         /// <summary>
         /// Maps a <see cref="Maybe{T}"/> into a <see cref="Result{T, TError}"/> by executing <paramref name="func"/> if
         /// <paramref name="value"/> is None. In the case where <paramref name="value"/> contains a value returns a <see cref="Result{T, TError}"/>
@@ -67,6 +70,7 @@ namespace wimm.Secundatives
             return v.OkOr(error);
         }
 
+
         /// <summary>
         /// Maps a <see cref="Task{T}"/> containing a <see cref="Maybe{T}"/> into a <see cref="Result{T, TError}"/> by executing <paramref name="func"/> if
         /// <paramref name="value"/> is None. In the case where <paramref name="value"/> contains a value returns a <see cref="Result{T, TError}"/>
@@ -121,7 +125,5 @@ namespace wimm.Secundatives
             var res = await value;
             return res.UnwrapOr(func());
         }
-
-
     }
 }

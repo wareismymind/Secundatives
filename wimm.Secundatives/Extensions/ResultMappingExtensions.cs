@@ -3,12 +3,16 @@ using System.Threading.Tasks;
 
 namespace wimm.Secundatives
 {
+
+    /// <summary>
+    /// Extensions for safely transforming the types within results
+    /// </summary>
     public static class ResultMappingExtensions
     {
 
         /// <summary>
         /// Transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying a function if the mapped
-        /// <see cref="Result{T, TError}"/> containts a value otherwise by constructing a new <see cref="Result{U, TError}"/> from the 
+        /// <see cref="Result{T, TError}"/> contains a value otherwise by constructing a new <see cref="Result{U, TError}"/> from the 
         /// <typeparamref name="TError"/> contained within  <paramref name="result"/>
         /// </summary>
         /// <typeparam name="T"> The success type of the initial result </typeparam>
@@ -32,7 +36,7 @@ namespace wimm.Secundatives
 
         /// <summary>
         /// Transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying an async  function if the mapped
-        /// <see cref="Result{T, TError}"/> containts a value otherwise by constructing a new <see cref="Result{U, TError}"/> from the 
+        /// <see cref="Result{T, TError}"/> contains a value otherwise by constructing a new <see cref="Result{U, TError}"/> from the 
         /// <typeparamref name="TError"/> contained within <paramref name="result"/>
         /// </summary>
         /// <typeparam name="T"> The success type of the initial result </typeparam>
@@ -56,7 +60,7 @@ namespace wimm.Secundatives
 
         /// <summary>
         /// Asynchronously <see cref="Result{T, TError}"/> into a <see cref="Task{T}"/> <see cref="Result{U, TError}"/> by applying a
-        /// function if the mapped  <see cref="Result{T, TError}"/> containts a value otherwise by constructing a new 
+        /// function if the mapped  <see cref="Result{T, TError}"/> contains a value otherwise by constructing a new 
         /// <see cref="Result{U,TError}"/> from the <typeparamref name="TError"/> contained within <paramref name="result"/>
         /// </summary>
         /// <typeparam name="T"> The success type of the initial result </typeparam>
@@ -77,7 +81,7 @@ namespace wimm.Secundatives
 
         /// <summary>
         /// Asynchronously transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying an async function and collapsing
-        /// the result if the mapped  <see cref="Result{T, TError}"/> containts a value otherwise by constructing a new 
+        /// the result if the mapped  <see cref="Result{T, TError}"/> contains a value otherwise by constructing a new 
         /// <see cref="Result{U,TError}"/> from the <typeparamref name="TError"/> contained within <paramref name="result"/>
         /// </summary>
         /// <typeparam name="T"> The success type of the initial result </typeparam>
@@ -100,7 +104,7 @@ namespace wimm.Secundatives
 
         /// <summary>
         /// Asynchronously transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying an async function and collapsing
-        /// the result if the mapped  <see cref="Result{T, TError}"/> containts a value otherwise by constructing a new 
+        /// the result if the mapped  <see cref="Result{T, TError}"/> contains a value otherwise by constructing a new 
         /// <see cref="Result{U,TError}"/> from the <typeparamref name="TError"/> contained within <paramref name="result"/>
         /// </summary>
         /// <typeparam name="T"> The success type of the initial result </typeparam>
@@ -125,7 +129,7 @@ namespace wimm.Secundatives
 
         /// <summary>
         /// Asynchronously transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying an async function and collapsing
-        /// the result if the mapped  <see cref="Result{T, TError}"/> containts a value otherwise by constructing a new 
+        /// the result if the mapped  <see cref="Result{T, TError}"/> contains a value otherwise by constructing a new 
         /// <see cref="Result{U,TError}"/> from the <typeparamref name="TError"/> contained within <paramref name="result"/>
         /// </summary>
         /// <typeparam name="T"> The success type of the initial result </typeparam>

@@ -4,6 +4,17 @@ using System.Collections.Generic;
 namespace wimm.Secundatives
 {
     /// <summary>
+    /// Static holder class for the constant <see cref="None"/>. 
+    /// </summary>
+    public static class Maybe
+    {
+        /// <summary>
+        /// A static instance of None to reduce memory pressure and to facilitate simple conversions
+        /// </summary>
+        public static readonly None None = new None();
+    }
+
+    /// <summary>
     /// Class that represents that a value may or may not exist
     /// </summary>
     /// <typeparam name="T"> The type of the internal value</typeparam>
@@ -46,6 +57,8 @@ namespace wimm.Secundatives
             Exists = true;
         }
 
+        //CN(justification): Suppressing documentation comments on trivially complex methods to prevent useless bloat
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static bool operator ==(Maybe<T> left, Maybe<T> right) => left.Equals(right);
 
         public static bool operator !=(Maybe<T> left, Maybe<T> right) => !left.Equals(right);
@@ -65,6 +78,10 @@ namespace wimm.Secundatives
         }
 
         public static implicit operator Maybe<T>(T value) => new Maybe<T>(value);
+
+        public static implicit operator Maybe<T>(None _) => new Maybe<T>();
+
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
         /// <summary>
         /// NOT SUPPORTED. <see cref="Maybe{T}"/> represents the possibility of a value. Operations

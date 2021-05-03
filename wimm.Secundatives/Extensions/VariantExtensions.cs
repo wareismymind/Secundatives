@@ -2,6 +2,9 @@
 
 namespace wimm.Secundatives.Extensions
 {
+    /// <summary>
+    /// Extensions for mapping variant types
+    /// </summary>
     public static class VariantExtensions
     {
         /// <summary>
