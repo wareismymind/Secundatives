@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using wimm.Secundatives.Extensions;
 using Xunit;
 
@@ -9,8 +10,8 @@ namespace wimm.Secundatives.UnitTests.Extensions
         private const string _valid = "doot";
         private const string _default = "tood";
         private readonly Func<string> _defaultFunc = () => _default;
-        private readonly Func<Task<string>> _defaultAsyncFunc = async () => { set = true; ; return await Task.FromResult(_default); };
-        private static bool set = false;
+        private readonly Func<Task<string>> _defaultAsyncFunc = async () => { _set = true; ; return await Task.FromResult(_default); };
+        private static bool _set = false;
         [Fact]
         public void UnwrapOr_Value_ReturnsValue()
         {
@@ -46,7 +47,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var underTest = new Maybe<string>();
             Assert.Equal(_default, await underTest.UnwrapOr(_defaultAsyncFunc));
-            Assert.True(set);
+            Assert.True(_set);
         }
 
         [Fact]
@@ -61,7 +62,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var underTest = new Maybe<string>(_valid);
             _ = await underTest.UnwrapOr(_defaultAsyncFunc);
-            Assert.False(set);
+            Assert.False(_set);
         }
     }
 }
