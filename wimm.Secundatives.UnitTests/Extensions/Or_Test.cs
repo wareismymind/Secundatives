@@ -1,9 +1,8 @@
-﻿using Xunit;
-
-using wimm.Secundatives.Extensions;
+﻿using System;
 using System.Threading.Tasks;
-using System;
 using Moq;
+using wimm.Secundatives.Extensions;
+using Xunit;
 
 namespace wimm.Secundatives.UnitTests.Extensions
 {
@@ -28,7 +27,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(expected,  expected.Or(() => Maybe<int>.None));
+            Assert.Equal(expected, expected.Or(() => Maybe<int>.None));
         }
 
         [Fact]
@@ -62,7 +61,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var expected = new Maybe<int>(42);
 
-            Assert.Equal(expected,  await Maybe<int>.None.Or(() => Task.FromResult(expected)));
+            Assert.Equal(expected, await Maybe<int>.None.Or(() => Task.FromResult(expected)));
         }
 
         [Fact]
@@ -178,7 +177,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var expected = new Maybe<int>(42);
             var func = new Mock<Func<Task<Maybe<int>>>>();
 
-            Assert.Equal(expected,  await Task.FromResult(expected).Or(func.Object));
+            Assert.Equal(expected, await Task.FromResult(expected).Or(func.Object));
 
             func.Verify(f => f.Invoke(), Times.Never);
         }

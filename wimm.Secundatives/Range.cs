@@ -5,8 +5,14 @@ namespace wimm.Secundatives
     /// <inheritDoc />
     public class Range<T> : IRange<T> where T : IComparable<T>
     {
+        /// <summary>
+        /// The inclusive lower bound of the range
+        /// </summary>
         public T Min { get; }
 
+        /// <summary>
+        /// The inclusive upper bound of the range
+        /// </summary>
         public T Max { get; }
 
         /// <summary>
@@ -28,6 +34,11 @@ namespace wimm.Secundatives
                     $"The value of {nameof(max)} must not be less than the value of {nameof(min)}.");
         }
 
+        /// <summary>
+        /// Determines if the given <typeparamref name="T"/> is between the lower and upper bounds of the <see cref="Range{T}"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns> <c>true</c> if <paramref name="value"/> is greater than <see cref="Max"/> and less than <see cref="Max"/> </returns>
         public bool Includes(T value)
         {
             Require(value, nameof(value));

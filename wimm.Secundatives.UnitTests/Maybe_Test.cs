@@ -5,6 +5,8 @@ namespace wimm.Secundatives.UnitTests
 {
     public class Maybe_Test
     {
+
+
         [Fact]
         public void Construct_ValueTypeDefault_EqualsNone()
         {
@@ -40,7 +42,14 @@ namespace wimm.Secundatives.UnitTests
         [Fact]
         public void Construct_ValueTypeDefaultValue_DoesNotEqualNone()
         {
-            Assert.NotEqual(Maybe<int>.None, new Maybe<int>(default(int)));
+            Assert.NotEqual(Maybe<int>.None, new Maybe<int>(default));
+        }
+
+        [Fact]
+        public void Constuct_None_CreatesNoneOfT()
+        {
+            Maybe<string> value = Maybe.None;
+            Assert.False(value.Exists);
         }
 
         [Fact]
@@ -340,5 +349,7 @@ namespace wimm.Secundatives.UnitTests
 
             Assert.Throws<InvalidOperationException>(() => underTest.GetHashCode());
         }
+
+
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Xunit;
 
 namespace wimm.Secundatives.UnitTests.Extensions
@@ -13,7 +9,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public void OkOrFunc_Value_ReturnsResultWithValue()
         {
             var underTest = new Maybe<string>("doot");
-            
+
             var result = underTest.OkOr(() => TestingEnum.BadThingsHappened);
 
             Assert.Equal("doot", result.Value);
@@ -68,7 +64,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var result = await underTest.OkOr(() => TestingEnum.BadThingsHappened);
 
             Assert.Equal(TestingEnum.BadThingsHappened, result.Error);
-            
+
         }
 
 
@@ -89,11 +85,11 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(TestingEnum.BadThingsHappened, result.Error);
         }
 
-        [Fact] 
+        [Fact]
         public async Task OkOrErrorTaskValue_ResultMemberExists_ReturnsInternalResult()
         {
             var input = new Result<string, TestingEnum>("doot");
-            var underTest = Task.FromResult(new Maybe<Result<string,TestingEnum>>(input));
+            var underTest = Task.FromResult(new Maybe<Result<string, TestingEnum>>(input));
             var result = await underTest.OkOr(TestingEnum.BadThingsHappened);
 
             Assert.Equal("doot", result.Value);
@@ -104,7 +100,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             var underTest = Task.FromResult(Maybe<Result<string, TestingEnum>>.None);
             var result = await underTest.OkOr(TestingEnum.BadThingsHappened);
-            
+
             Assert.Equal(TestingEnum.BadThingsHappened, result.Error);
 
         }

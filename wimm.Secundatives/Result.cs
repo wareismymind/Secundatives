@@ -1,5 +1,4 @@
 ﻿using System;
-using wimm.Secundatives.Extensions;
 
 namespace wimm.Secundatives
 {
@@ -9,7 +8,7 @@ namespace wimm.Secundatives
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TError"></typeparam>
-    public class Result<T,TError> : Variant<T, TError>
+    public class Result<T, TError> : Variant<T, TError>
     {
         /// <summary> A value indicating whether the operation resulted in an error type </summary>
         public bool IsError => Is<TError>();
@@ -46,8 +45,11 @@ namespace wimm.Secundatives
         {
         }
 
-        public static implicit operator Result<T,TError>(T value) => new Result<T,TError>(value);
+        //CN(justification): These operators are trivial and their documentation would just be code bloat
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public static implicit operator Result<T, TError>(T value) => new Result<T, TError>(value);
         public static implicit operator Result<T, TError>(TError error) => new Result<T, TError>(error);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
 
@@ -57,7 +59,7 @@ namespace wimm.Secundatives
     /// report failure
     /// </summary>
     /// <typeparam name="T"> The type to be returned on success </typeparam>
-    public class Result<T> : Result<T,Error>
+    public class Result<T> : Result<T, Error>
     {
 
         /// <summary>
@@ -74,9 +76,11 @@ namespace wimm.Secundatives
         {
         }
 
+        //CN(justification): These operators are trivial and their documentation would just be code bloat
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static implicit operator Result<T>(T value) => new Result<T>(value);
         public static implicit operator Result<T>(Error error) => new Result<T>(error);
-
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
 }

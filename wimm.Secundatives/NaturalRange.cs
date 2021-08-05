@@ -11,8 +11,15 @@ namespace wimm.Secundatives
         private const string _outOfRangeMessage = "Must be greater than or equal to zero.";
         private readonly Range<int> _range;
 
+
+        /// <summary>
+        /// <see cref="Range{T}.Max"/>
+        /// </summary>
         public int Max => _range.Max;
 
+        /// <summary>
+        /// <see cref="Range{T}.Min"/>
+        /// </summary>
         public int Min => _range.Min;
 
         /// <summary>
@@ -44,6 +51,9 @@ namespace wimm.Secundatives
             _range = new Range<int>(min, max);
         }
 
+        /// <summary>
+        /// <see cref="Range{T}.Includes(T)"/>
+        /// </summary>
         public bool Includes(int value) => _range.Includes(value);
     }
 }

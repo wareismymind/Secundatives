@@ -153,7 +153,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(OtherError.OtherSadness, res.Error);
         }
 
-
         [Fact]
         public async Task MapErrorTask_IsSuccessAndFuncReturnsValue_ReturnsValue()
         {
@@ -163,8 +162,26 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal("doot", res.Value);
         }
 
+        [Fact]
+        public void MapOr_IsSuccess_ReturnsResultOfFunc()
+        {
+            var underTest = ConstructWith(1);
+            var res = underTest.MapOr(_ => "deet", _ => OtherError.OtherSadness.ToString());
 
-        private Result<T, TestError> ConstructWith<T>(T value)
+            Assert.Equal("deet", res);
+        }
+
+
+        [Fact]
+        public void MapOr_IsError_ReturnsResultOfErrorFunc()
+        {
+            var underTest = new Result<string, TestError>(TestError.Sadness);
+            var res = underTest.MapOr(_ => "deet", _ => OtherError.OtherSadness.ToString());
+
+            Assert.Equal(OtherError.OtherSadness.ToString(), res);
+        }
+
+        private static Result<T, TestError> ConstructWith<T>(T value)
         {
             return new Result<T, TestError>(value);
         }
