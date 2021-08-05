@@ -99,7 +99,8 @@ namespace wimm.Secundatives.Extensions
         /// <param name="maybe"> The <see cref="Maybe{T}"/> to be unwrapped </param>
         /// <param name="func"> A function that asynchronosly returns a <typeparamref name="T"/> that will be called if
         /// unwrapping of <paramref name="maybe"/> is not possible </param>
-        /// <returns></returns>
+        /// <returns> The <typeparamref name="T"/> held within <paramref name="maybe"/> if it exists. Otherwise
+        /// the result of awaiting the execution of <paramref name="func"/> </returns>
         public static async Task<T> UnwrapOr<T>(this Maybe<T> maybe, Func<Task<T>> func) => maybe.Exists ? maybe.Value : await func();
 
         /// <summary>
