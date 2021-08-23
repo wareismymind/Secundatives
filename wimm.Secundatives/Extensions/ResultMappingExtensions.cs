@@ -217,5 +217,26 @@ namespace wimm.Secundatives
         {
             return result.IsValue ? valueFunc(result.Value) : errorFunc(result.Error);
         }
+
+        /// <summary>
+        /// Transforms a <see cref="Result{T, TError}"/> into a <typeparamref name="U"/> by applying a function if the mapped
+        /// <see cref="Result{T, TError}"/> containts a value, otherwise by applying a function to the 
+        /// <typeparamref name="TError"/> contained within <paramref name="result"/>
+        /// </summary>
+        /// <typeparam name="T"> The success type of the initial result </typeparam>
+        /// <typeparam name="U"> The type that <paramref name="result"/>'s value and error are transformed to by
+        /// <typeparam name="TError"> The error type of the result </typeparam>
+        /// <param name="result"> A task resulting in a <see cref="Result{T, TError}"/> whose state determines which function is applied </param>
+        /// <paramref name="valueFunc"/> and <paramref name="errorFunc"/> </typeparam>
+        /// <param name="valueFunc"> The function that will transform <paramref name="result"/>'s <typeparamref name="T"/> if it exists</param>
+        /// <param name="errorFunc"> The function that will transform <paramref name="result"/>'s <typeparamref name="TError"/> if it exists</param>
+        /// <returns> A <typeparamref name="U"/> that is returned by calling <paramref name="valueFunc"/> on the value of <paramref
+        /// name="result"/> or by calling <paramref name="errorFunc"/> on the error from <paramref name="result"/>
+        /// </returns>
+        public static async Task<U> MapOr<T, U, TError>(this Task<Result<T, TError>> result, Func<T, U> valueFunc, Func<TError, U> errorFunc)
+        {
+            var res = await result;
+            return res.IsValue ? valueFunc(res.Value) : errorFunc(res.Error);
+        }
     }
 }
