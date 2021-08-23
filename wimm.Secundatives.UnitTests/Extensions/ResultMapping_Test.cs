@@ -171,12 +171,29 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal("deet", res);
         }
 
-
         [Fact]
         public void MapOr_IsError_ReturnsResultOfErrorFunc()
         {
             var underTest = new Result<string, TestError>(TestError.Sadness);
             var res = underTest.MapOr(_ => "deet", _ => OtherError.OtherSadness.ToString());
+
+            Assert.Equal(OtherError.OtherSadness.ToString(), res);
+        }
+
+        [Fact]
+        public async Task MapOrTask_IsSuccess_ReturnsResultOfFunc()
+        {
+            var underTest = Task.FromResult(ConstructWith(1));
+            var res = await underTest.MapOr(_ => "deet", _ => OtherError.OtherSadness.ToString());
+
+            Assert.Equal("deet", res);
+        }
+
+        [Fact]
+        public async Task MapOrTask_IsError_ReturnsResultsOfErrorFunc()
+        {
+            var underTest = Task.FromResult(new Result<string, TestError>(TestError.Sadness));
+            var res = await underTest.MapOr(_ => "deet", _ => OtherError.OtherSadness.ToString());
 
             Assert.Equal(OtherError.OtherSadness.ToString(), res);
         }
