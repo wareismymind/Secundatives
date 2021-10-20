@@ -47,7 +47,6 @@ namespace wimm.Secundatives
             return _value is W;
         }
 
-
         /// <summary>
         /// Gets a value of type <typeparamref name="W"/> if possible. 
         /// </summary>

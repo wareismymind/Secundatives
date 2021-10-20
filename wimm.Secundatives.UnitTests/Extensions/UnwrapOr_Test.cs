@@ -100,7 +100,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var underTest = Task.FromResult(new Maybe<string>(_valid));
             Assert.Equal(_valid, await underTest.UnwrapOr(_defaultFunc));
         }
-        
+
         [Fact]
         public async Task UnwrapOrTaskMaybe_Value_DoesNotExecuteFunction()
         {
