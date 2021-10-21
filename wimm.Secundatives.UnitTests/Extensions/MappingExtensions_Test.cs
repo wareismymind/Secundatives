@@ -1,160 +1,192 @@
 ﻿using System.Threading.Tasks;
-using wimm.Secundatives.Extensions;
 using Xunit;
 
 namespace wimm.Secundatives.UnitTests.Extensions
 {
     public class MappingExtensions_Test
     {
-        [Fact]
-        public void MapMaybe_None_ReturnsNone()
+        public class MapMaybe_FuncTToU
         {
-            var underTest = Maybe<int>.None;
-            var result = underTest.Map(x => x + 100);
+            [Fact]
+            public void None_ReturnsNone()
+            {
+                var underTest = Maybe<int>.None;
+                var actual = underTest.Map(x => x.ToString());
+                Assert.Equal(Maybe.None, actual);
+            }
 
-            Assert.Equal(Maybe<int>.None, result);
+            [Fact]
+            public void Some_ReturnsTransformedValue()
+            {
+                var underTest = new Maybe<int>(10);
+                var actual = underTest.Map(x => x.ToString());
+                Assert.Equal("10", actual.Value);
+            }
         }
 
-        [Fact]
-        public void MapMaybe_Value_ReturnsTransformed()
+        public class MapMaybe_FuncTToMaybeU
         {
-            var underTest = new Maybe<int>(10);
-            var result = underTest.Map(x => x.ToString());
+            [Fact]
+            public void None_ReturnsNone()
+            {
+                var underTest = Maybe<int>.None;
+                var actual = underTest.Map(x => new Maybe<string>(x.ToString()));
+                Assert.Equal(Maybe.None, actual);
+            }
 
-            Assert.Equal("10", result.Value);
+            [Fact]
+            public void SomeAndTransformReturnsNone_ReturnsNone()
+            {
+                var underTest = new Maybe<int>(10);
+                var actual = underTest.Map(x => Maybe<string>.None);
+                Assert.Equal(Maybe.None, actual);
+            }
+
+            [Fact]
+            public void SomeAndTransformReturnsSome_ReturnsSome()
+            {
+                var underTest = new Maybe<int>(10);
+                var actual = underTest.Map(x => new Maybe<string>(x.ToString()));
+                Assert.Equal("10", actual.Value);
+            }
         }
 
-        [Fact]
-        public async Task MapMaybe_NoneAndFuncReturnsTask_ReturnsNoneTask()
+        public class MapMaybe_FuncTToTaskU
         {
-            var underTest = Maybe<int>.None;
+            [Fact]
+            public async Task None_ReturnsNone()
+            {
+                var underTest = Maybe<int>.None;
+                var actual = await underTest.Map(x => Task.FromResult(x.ToString()));
+                Assert.Equal(Maybe.None, actual);
+            }
 
-            var result = await underTest.Map(x => Task.FromResult(x.ToString()));
-
-            Assert.Equal(Maybe<string>.None, result);
+            [Fact]
+            public async Task Some_ReturnsTransformedValue()
+            {
+                var underTest = new Maybe<int>(10);
+                var actual = await underTest.Map(x => Task.FromResult(x.ToString()));
+                Assert.Equal("10", actual.Value);
+            }
         }
 
-        [Fact]
-        public async Task MapMaybe_ValueAndFuncReturnsTask_ReturnsValueTask()
+        public class MapMaybe_FuncTToTaskMaybeU
         {
-            var underTest = new Maybe<int>(10);
-            var result = await underTest.Map(x => Task.FromResult(x.ToString()));
+            [Fact]
+            public async Task None_ReturnsNone()
+            {
+                var underTest = Maybe<int>.None;
+                var actual = await underTest.Map(x => Task.FromResult(new Maybe<string>(x.ToString())));
+                Assert.Equal(Maybe.None, actual);
+            }
 
-            Assert.Equal("10", result.Value);
+            [Fact]
+            public async Task SomeAndTransformReturnsNone_ReturnsNone()
+            {
+                var underTest = new Maybe<int>(10);
+                var actual = await underTest.Map(x => Task.FromResult(Maybe<string>.None));
+                Assert.Equal(Maybe.None, actual);
+            }
+
+            [Fact]
+            public async Task SomeAndTransformReturnsSome_ReturnsSome()
+            {
+                var underTest = new Maybe<int>(10);
+                var actual = await underTest.Map(x => Task.FromResult(new Maybe<string>(x.ToString())));
+                Assert.Equal("10", actual.Value);
+            }
         }
 
-        [Fact]
-        public void MapMaybe_NoneAndFuncReturnsMaybeWithValue_ReturnsNone()
+        public class MapTaskMaybe_FuncTToU
         {
-            var underTest = Maybe<int>.None;
-            var result = underTest.Map(x => new Maybe<string>((x + 100).ToString()));
+            [Fact]
+            public async Task None_ReturnsNone()
+            {
+                var underTest = Task.FromResult(Maybe<int>.None);
+                var actual = await underTest.Map(x => x.ToString());
+                Assert.Equal(Maybe.None, actual);
+            }
 
-            Assert.Equal(Maybe<string>.None, result);
-
+            [Fact]
+            public async Task Some_ReturnsTransformedValue()
+            {
+                var underTest = Task.FromResult(new Maybe<int>(10));
+                var actual = await underTest.Map(x => x.ToString());
+                Assert.Equal("10", actual.Value);
+            }
         }
 
-        [Fact]
-        public void MapMaybe_ValueAndFuncReturnsMaybeWithValue_ReturnsMappedValue()
+        public class MapTaskMaybe_FuncTToMaybeU
         {
-            var underTest = new Maybe<int>(10);
-            var result = underTest.Map(x => new Maybe<string>((x + 100).ToString()));
+            [Fact]
+            public async Task None_ReturnsNone()
+            {
+                var underTest = Task.FromResult(Maybe<int>.None);
+                var actual = await underTest.Map(x => new Maybe<string>(x.ToString()));
+                Assert.Equal(Maybe.None, actual);
+            }
 
-            Assert.Equal("110", result.Value);
+            [Fact]
+            public async Task SomeAndTransformReturnsNone_ReturnsNone()
+            {
+                var underTest = Task.FromResult(new Maybe<int>(10));
+                var actual = await underTest.Map(x => Maybe<string>.None);
+                Assert.Equal(Maybe.None, actual);
+            }
+
+            [Fact]
+            public async Task SomeAndTransformReturnsSome_ReturnsSome()
+            {
+                var underTest = Task.FromResult(new Maybe<int>(10));
+                var actual = await underTest.Map(x => new Maybe<string>(x.ToString()));
+                Assert.Equal("10", actual.Value);
+            }
         }
 
-        [Fact]
-        public void MapMaybe_ValueAndFuncReturnsMaybeWithNone_ReturnsNone()
+        public class MapTaskMaybe_FuncTToTaskU
         {
-            var underTest = new Maybe<int>(10);
-            var result = underTest.Map(x => new Maybe<string>());
+            [Fact]
+            public async Task None_ReturnsNone()
+            {
+                var underTest = Task.FromResult(Maybe<int>.None);
+                var actual = await underTest.Map(x => Task.FromResult(x.ToString()));
+                Assert.Equal(Maybe.None, actual);
+            }
 
-            Assert.Equal(Maybe<string>.None, result);
+            [Fact]
+            public async Task Some_ReturnsTransformedValue()
+            {
+                var underTest = Task.FromResult(new Maybe<int>(10));
+                var actual = await underTest.Map(x => Task.FromResult(x.ToString()));
+                Assert.Equal("10", actual.Value);
+            }
         }
 
-        [Fact]
-        public void MapMaybe_ValueAndFuncReturnsValue_ReturnsValue()
+        public class MapTaskMaybe_FuncTToTaskMaybeU
         {
-            var underTest = new Maybe<int>(100);
-            var result = underTest.Map(x => (x + 100).ToString());
+            [Fact]
+            public async Task None_ReturnsNone()
+            {
+                var underTest = Task.FromResult(Maybe<int>.None);
+                var actual = await underTest.Map(x => Task.FromResult(new Maybe<string>(x.ToString())));
+                Assert.Equal(Maybe.None, actual);
+            }
 
-            Assert.Equal("200", result.Value);
-        }
+            [Fact]
+            public async Task SomeAndTransformReturnsNone_ReturnsNone()
+            {
+                var underTest = Task.FromResult(new Maybe<int>(10));
+                var actual = await underTest.Map(x => Task.FromResult(Maybe<string>.None));
+                Assert.Equal(Maybe.None, actual);
+            }
 
-        [Fact]
-        public async Task MapTask_None_ReturnsNone()
-        {
-            var underTest = Task.FromResult(Maybe<int>.None);
-
-            var result = await underTest.Map(x => x.ToString());
-            Assert.Equal(Maybe<string>.None, result);
-        }
-
-        [Fact]
-        public async Task MapTask_Value_ReturnsValue()
-        {
-            var underTest = Task.FromResult(new Maybe<int>(100));
-
-            var result = await underTest.Map(x => x.ToString());
-
-            Assert.Equal("100", result.Value);
-        }
-
-        [Fact]
-        public async Task MapMaybe_NoneAndFuncReturnsAsyncMaybe_ReturnsNoneTask()
-        {
-            var underTest = Maybe<int>.None;
-            var result = await underTest.Map(x => Task.FromResult(new Maybe<string>(x.ToString())));
-
-            Assert.Equal(Maybe<string>.None, result);
-        }
-
-        [Fact]
-        public async Task MapMaybe_ValueAndFuncReturnAsyncValue_ReturnsValueTask()
-        {
-            var underTest = new Maybe<int>(100);
-            var result = await underTest.Map(x => Task.FromResult(new Maybe<string>(x.ToString())));
-
-            Assert.Equal("100", result.Value);
-        }
-
-        [Fact]
-        public async Task MapTask_ValueAndFuncReturnsAsyncValue_ReturnsValue()
-        {
-            var underTest = Task.FromResult(new Maybe<int>(100));
-
-            var result = await underTest.Map(x => Task.FromResult(x.ToString()));
-
-            Assert.Equal("100", result.Value);
-        }
-
-        [Fact]
-        public async Task MapTask_NoneAndFuncReturnsAsyncValue_ReturnsNone()
-        {
-            var underTest = Task.FromResult(Maybe<int>.None);
-
-            var result = await underTest.Map(x => Task.FromResult(x.ToString()));
-
-            Assert.Equal(Maybe<string>.None, result);
-        }
-
-        [Fact]
-        public async Task MapTask_ValueAndFuncReturnsAsyncMaybe_FlattensAndReturnsValue()
-        {
-            var underTest = Task.FromResult(new Maybe<int>(100));
-
-            var result = await underTest.Map(x => Task.FromResult(x.ToString().AsMaybe()));
-
-            Assert.Equal("100", result.Value);
-        }
-
-        [Fact]
-        public async Task MapMaybe_NoneAndFuncReturnsAsyncMaybe_ReturnsNone()
-        {
-            var underTest = Task.FromResult(Maybe<int>.None);
-
-            var result = await underTest.Map(x => Task.FromResult(x.ToString().AsMaybe()));
-
-            Assert.Equal(Maybe<string>.None, result);
+            [Fact]
+            public async Task SomeAndTransformReturnsSome_ReturnsSome()
+            {
+                var underTest = Task.FromResult(new Maybe<int>(10));
+                var actual = await underTest.Map(x => Task.FromResult(new Maybe<string>(x.ToString())));
+                Assert.Equal("10", actual.Value);
+            }
         }
     }
 }
