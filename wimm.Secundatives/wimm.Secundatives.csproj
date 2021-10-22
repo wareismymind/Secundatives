@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Description>A collection of types slightly more advanced than primitives.</Description>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>Thomas Showers, Chris Nantau, Secundatives Contributors</Authors>
