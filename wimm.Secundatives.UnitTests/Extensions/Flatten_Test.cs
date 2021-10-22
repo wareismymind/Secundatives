@@ -20,7 +20,7 @@ namespace wimm.Secundatives.UnitTests.Extensions
         public void Flatten_InnerExistsAndIsValue_ReturnsValue()
         {
             var value = "This is a value";
-            var underTest = new Result<Result<string, int>,int>(new Result<string, int>("This is a value"));
+            var underTest = new Result<Result<string, int>, int>(new Result<string, int>("This is a value"));
             var res = underTest.Flatten();
 
             Assert.True(res.IsValue);
