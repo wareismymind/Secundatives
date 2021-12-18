@@ -7,10 +7,13 @@ runs:
   steps:
 
     - name: Restore Packages
+      shell: bash
       run: dotnet restore
 
     - name: Build Solution
+      shell: bash
       run: dotnet build --no-restore
 
     - name: Run Unit Tests
+      shell: bash
       run: dotnet test --no-build
