@@ -5,7 +5,6 @@ runs:
   using: 'composite'
 
   steps:
-
     - name: Setup Dotnet 5.0
       uses: actions/setup-dotnet@v1
       with:
