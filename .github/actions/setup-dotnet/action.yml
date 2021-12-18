@@ -1,0 +1,19 @@
+name: 'Setup Dotnet'
+description: 'Sets up the versions of dotnet required by the project'
+
+runs:
+  using: 'composite'
+
+  steps:
+
+    - name: Setup Dotnet 5.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        include-prerelease: false
+
+    - name: Setup Dotnet 6.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+        include-prerelease: false

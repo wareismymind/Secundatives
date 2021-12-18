@@ -1,0 +1,16 @@
+name: 'Builds and Test'
+description: 'Builds the library and runs the unit tests'
+
+runs:
+  using: composite
+
+  steps:
+
+    - name: Restore Packages
+      run: dotnet restore
+
+    - name: Build Solution
+      run: dotnet build --no-restore
+
+    - name: Run Unit Tests
+      run: dotnet test --no-build

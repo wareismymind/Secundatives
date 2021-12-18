@@ -1,11 +1,9 @@
-name: Continuous Integration
-
 on:
-  pull_request:
-    branches: [master]
+  workflow_call:
 
 jobs:
-  build-and-test:
+  build_and_test:
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
