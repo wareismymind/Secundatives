@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <Description>A collection of types slightly more advanced than primitives.</Description>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>Thomas Showers, Chris Nantau, Secundatives Contributors</Authors>
     <Company>wareismymind</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/wareismymind/Secundatives</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/wareismymind/Secundatives</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/wareismymind/secundatives</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/wareismymind/secundatives</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>true</IncludeSymbols>
   </PropertyGroup>
