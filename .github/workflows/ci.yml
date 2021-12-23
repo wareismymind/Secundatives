@@ -5,6 +5,5 @@ on:
     branches: [master]
 
 jobs:
-
   build-and-test:
     uses: wareismymind/secundatives/.github/workflows/build-and-test.yml@master
