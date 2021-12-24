@@ -10,8 +10,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Setup Dotnet
-        uses: ./.github/actions/setup-dotnet
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+          include-prerelease: false
 
-      - name: Build and Test
-        uses: ./.github/actions/build-and-test
+      - name: Dotnet Restore
+        run: dotnet restore
+
+      - name: Dotnet Build
+        run: dotnet build --no-restore
+
+      - name: Run Tests
+        run: dotnet test --no-build

@@ -6,14 +6,4 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Setup Dotnet
-        uses: ./.github/actions/setup-dotnet
-
-      - name: Build and Test
-        uses: ./.github/actions/build-and-test
+    uses: wareismymind/secundatives/.github/workflows/build-and-test.yml@master
