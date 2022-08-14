@@ -17,6 +17,8 @@ namespace wimm.Secundatives.Extensions
         /// The un-nested result of inspecting the outer result for error and returning it if it exists or the nested result itself otherwise 
         /// </returns>
         public static Result<TValue, TErr> Flatten<TValue, TErr>(this Result<Result<TValue, TErr>, TErr> result)
+            where TValue : notnull
+            where TErr : notnull
         {
             return result.IsValue ? result.Value : result.Error;
         }
@@ -31,6 +33,8 @@ namespace wimm.Secundatives.Extensions
         /// A task containing the un-nested result of inspecting the outer result for error and returning it if it exists or the nested result itself otherwise 
         /// </returns>
         public static async Task<Result<TValue, TErr>> Flatten<TValue, TErr>(this Task<Result<Result<TValue, TErr>, TErr>> res)
+            where TValue : notnull
+            where TErr : notnull
         {
             var result = await res;
             return result.IsValue ? result.Value : result.Error;

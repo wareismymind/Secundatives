@@ -20,7 +20,6 @@ namespace wimm.Secundatives.Extensions
         /// <returns> The <typeparamref name="T"/> held within <paramref name="maybe"/> if it exists. </returns>
         public static T Expect<T>(this Maybe<T> maybe) => maybe.Expect($"Expected value in {nameof(Maybe<T>)}");
 
-
         /// Extension to indicate that a value missing from a <see cref="Maybe{T}"/> is unrecoverable. 
         /// Unwraps the <see cref="Maybe{T}"/> if it exists or throws a <see cref="ExpectException"/>
         /// with a custom message.
@@ -54,7 +53,6 @@ namespace wimm.Secundatives.Extensions
             return (await maybeTask).Expect(message);
         }
 
-
         /// <summary>
         /// Helper function to apply <see cref="Expect{T}(Maybe{T})"/> in async contexts. Awaits the task containing the <see cref="Maybe{T}"/>
         /// and then applies the <see cref="Expect{T}(Maybe{T})"/> function to it.
@@ -68,7 +66,6 @@ namespace wimm.Secundatives.Extensions
             return (await maybeTask).Expect();
         }
 
-
         /// <summary>
         /// Unwraps the <see cref="Maybe{T}"/> if possible and returns a provided default otherwise
         /// </summary>
@@ -79,7 +76,6 @@ namespace wimm.Secundatives.Extensions
         /// <returns> The <typeparamref name="T"/> held within <paramref name="maybe"/> if it exists. Otherwise
         /// <paramref name="defaultValue"/> </returns>
         public static T UnwrapOr<T>(this Maybe<T> maybe, T defaultValue) => maybe.Exists ? maybe.Value : defaultValue;
-
 
         /// <summary>
         /// Unwraps the <see cref="Maybe{T}"/> if possible and returns the results of a provided function otherwise
@@ -102,7 +98,6 @@ namespace wimm.Secundatives.Extensions
         /// <returns> The <typeparamref name="T"/> held within <paramref name="maybe"/> if it exists. Otherwise
         /// the result of awaiting the execution of <paramref name="func"/> </returns>
         public static async Task<T> UnwrapOr<T>(this Maybe<T> maybe, Func<Task<T>> func) => maybe.Exists ? maybe.Value : await func();
-
 
         /// <summary>
         /// Unwraps the <see cref="Maybe{T}"/> that results from the <see cref="Task"/> if possible and returns the results of awaiting the provided async function otherwise
@@ -160,7 +155,6 @@ namespace wimm.Secundatives.Extensions
             return value.HasValue ? new Maybe<T>(value.Value) : Maybe<T>.None;
         }
 
-
         /// <summary>
         /// Helper function that awaits a <see cref="Task{T}"/>'s result and converts it into a <see cref="Maybe{T}"/>
         /// </summary>
@@ -174,7 +168,6 @@ namespace wimm.Secundatives.Extensions
         {
             return (await value).AsMaybe();
         }
-
 
         /// <summary>
         /// Helper function that awaits a <see cref="Task{T}"/>'s nullable result and converts it into a <see cref="Maybe{T}"/>

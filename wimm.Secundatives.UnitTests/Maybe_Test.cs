@@ -6,7 +6,6 @@ namespace wimm.Secundatives.UnitTests
     public class Maybe_Test
     {
 
-
         [Fact]
         public void Construct_ValueTypeDefault_EqualsNone()
         {
@@ -349,7 +348,5 @@ namespace wimm.Secundatives.UnitTests
 
             Assert.Throws<InvalidOperationException>(() => underTest.GetHashCode());
         }
-
-
     }
 }

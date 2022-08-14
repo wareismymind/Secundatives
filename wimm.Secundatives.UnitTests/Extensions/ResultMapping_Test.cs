@@ -64,7 +64,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(TestError.Sadness, res.Error);
         }
 
-
         [Fact]
         public async Task MapTaskResult_IsSuccessAndFuncReturnsTask_ReturnsResultOfFunc()
         {
@@ -132,7 +131,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.True(res.IsError);
             Assert.Equal(OtherError.OtherSadness, res.Error);
         }
-
 
         [Fact]
         public void MapErrorValue_IsSuccessAndFuncReturnsValue_ReturnsValue()
@@ -203,7 +201,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             return new Result<T, TestError>(value);
         }
 
-
         private enum TestError
         {
             Sadness
@@ -213,6 +210,5 @@ namespace wimm.Secundatives.UnitTests.Extensions
         {
             OtherSadness
         }
-
     }
 }

@@ -90,11 +90,8 @@ namespace wimm.Secundatives.UnitTests
             return new Variant<int, string>(42);
         }
 
-
-
         class Base { }
         class Derived : Base { }
         class OtherDerived : Base { }
-
     }
 }

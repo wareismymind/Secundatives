@@ -9,8 +9,17 @@ namespace wimm.Secundatives.UnitTests.Extensions
     {
         private const string _valid = "doot";
         private const string _default = "tood";
-        private readonly Func<string> _defaultFunc = () => { _set = true; return _default; };
-        private readonly Func<Task<string>> _defaultAsyncFunc = async () => { _set = true; ; return await Task.FromResult(_default); };
+        private readonly Func<string> _defaultFunc = () =>
+        {
+            _set = true;
+            return _default;
+        };
+        private readonly Func<Task<string>> _defaultAsyncFunc = async () =>
+        {
+            _set = true; 
+            return await Task.FromResult(_default);
+        };
+
         private static bool _set = false;
 
         public UnwrapOr_Test()
@@ -39,7 +48,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var underTest = new Maybe<string>();
             Assert.Equal(_default, underTest.UnwrapOr(_defaultFunc));
         }
-
 
         [Fact]
         public void UnwrapOr_NoValue_ReturnsDefaultParam()

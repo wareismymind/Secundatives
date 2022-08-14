@@ -25,7 +25,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Throws<ArgumentException>("message", () => underTest.Expect(" \t\r\n"));
         }
 
-
         [Fact]
         public void ExpectMessage_DoesNotExist_ThrowsWithMessage()
         {
@@ -85,8 +84,5 @@ namespace wimm.Secundatives.UnitTests.Extensions
             var underTest = Task.FromResult(new Maybe<int>(10));
             Assert.Equal(10, await underTest.Expect(_message));
         }
-
-
-
     }
 }

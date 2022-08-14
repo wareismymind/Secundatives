@@ -11,7 +11,7 @@ namespace wimm.Secundatives
         /// <summary>
         /// A static instance of None to reduce memory pressure and to facilitate simple conversions
         /// </summary>
-        public static readonly None None = new None();
+        public static readonly None None = new();
     }
 
     /// <summary>
@@ -63,9 +63,9 @@ namespace wimm.Secundatives
 
         public static bool operator !=(Maybe<T> left, Maybe<T> right) => !left.Equals(right);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (!(obj is Maybe<T> maybe))
+            if (obj is not Maybe<T> maybe)
                 return false;
 
             return Equals(maybe);
@@ -77,9 +77,9 @@ namespace wimm.Secundatives
                 && EqualityComparer<T>.Default.Equals(_value, other._value);
         }
 
-        public static implicit operator Maybe<T>(T value) => new Maybe<T>(value);
+        public static implicit operator Maybe<T>(T value) => new(value);
 
-        public static implicit operator Maybe<T>(None _) => new Maybe<T>();
+        public static implicit operator Maybe<T>(None _) => new();
 
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 

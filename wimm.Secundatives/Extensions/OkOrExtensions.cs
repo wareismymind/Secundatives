@@ -23,13 +23,14 @@ namespace wimm.Secundatives
         /// contains the result of executing <paramref name="func"/>
         /// </returns>
         public static Result<T, TError> OkOr<T, TError>(this Maybe<T> value, Func<TError> func)
+            where T : notnull
+            where TError : notnull
         {
             if (value.Exists)
                 return value.Value;
 
             return func();
         }
-
 
         /// <summary>
         /// Maps a <see cref="Maybe{T}"/> into a <see cref="Result{T, TError}"/> by returning a default value <paramref name="error"/> if
@@ -44,13 +45,14 @@ namespace wimm.Secundatives
         /// contains <paramref name="error"/>
         /// </returns>
         public static Result<T, TError> OkOr<T, TError>(this Maybe<T> value, TError error)
+            where T : notnull
+            where TError : notnull
         {
             if (value.Exists)
                 return value.Value;
 
             return error;
         }
-
 
         /// <summary>
         /// Maps a <see cref="Task{T}"/> containing a <see cref="Maybe{T}"/> into a <see cref="Result{T, TError}"/> by returning a default value <paramref name="error"/> if
@@ -65,11 +67,12 @@ namespace wimm.Secundatives
         /// contains <paramref name="error"/>
         /// </returns>
         public static async Task<Result<T, TError>> OkOr<T, TError>(this Task<Maybe<T>> value, TError error)
+            where T : notnull
+            where TError : notnull
         {
             var v = await value;
             return v.OkOr(error);
         }
-
 
         /// <summary>
         /// Maps a <see cref="Task{T}"/> containing a <see cref="Maybe{T}"/> into a <see cref="Result{T, TError}"/> by executing <paramref name="func"/> if
@@ -84,12 +87,13 @@ namespace wimm.Secundatives
         /// contains the result of executing <paramref name="func"/>
         /// </returns>
         public static async Task<Result<T, TError>> OkOr<T, TError>(this Task<Maybe<T>> value, Func<TError> func)
+            where T : notnull
+            where TError : notnull
         {
             var v = await value;
             return v.OkOr(func);
 
         }
-
 
         /// <summary>
         /// Collapsing mapping of a  <see cref="Task{T}"/> containing a <see cref="Maybe{T}"/> that may hold a <see cref="Result{T,TErr}"/>
@@ -103,11 +107,12 @@ namespace wimm.Secundatives
         /// <returns> A <see cref="Result{T, TError}"/> either contained by <paramref name="value"/> if it exists or created
         /// from <paramref name="error"/> if it is None</returns>
         public static async Task<Result<T, TError>> OkOr<T, TError>(this Task<Maybe<Result<T, TError>>> value, TError error)
+            where T : notnull
+            where TError : notnull
         {
             var res = await value;
             return res.UnwrapOr(error);
         }
-
 
         /// <summary>
         /// Collapsing mapping of a  <see cref="Task{T}"/> containing a <see cref="Maybe{T}"/> that may hold a <see cref="Result{T,TErr}"/>
@@ -121,6 +126,8 @@ namespace wimm.Secundatives
         /// <returns> A <see cref="Result{T, TError}"/> either contained by <paramref name="value"/> if it exists or created
         /// from the results of calling <paramref name="func"/> if it is None</returns>
         public static async Task<Result<T, TError>> OkOr<T, TError>(this Task<Maybe<Result<T, TError>>> value, Func<TError> func)
+            where T : notnull
+            where TError : notnull
         {
             var res = await value;
             return res.UnwrapOr(func());

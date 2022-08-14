@@ -5,7 +5,7 @@ namespace wimm.Secundatives.UnitTests
 {
     public class Result_Test
     {
-        private readonly Error _err = new Error("BadDoot");
+        private readonly Error _err = new("BadDoot");
 
         [Fact]
         public void Error_ContainsValue_Throws()
@@ -13,7 +13,6 @@ namespace wimm.Secundatives.UnitTests
             var underTest = ConstructInt();
             Assert.Throws<InvalidOperationException>(() => underTest.Error);
         }
-
 
         [Fact]
         public void Value_ContainsError_Throws()
@@ -28,7 +27,6 @@ namespace wimm.Secundatives.UnitTests
             var underTest = ConstructErr();
             Assert.Equal(_err, underTest.Error);
         }
-
 
         [Fact]
         public void Value_ContainsValue_ReturnsValue()
@@ -92,9 +90,7 @@ namespace wimm.Secundatives.UnitTests
             var underTest = ConstructErr();
             Assert.False(underTest.Ok().Exists);
         }
-
-
-        private Result<int> ConstructInt()
+        private static Result<int> ConstructInt()
         {
             return 42;
         }
@@ -103,6 +99,5 @@ namespace wimm.Secundatives.UnitTests
         {
             return _err;
         }
-
     }
 }
