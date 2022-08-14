@@ -63,7 +63,7 @@ namespace wimm.Secundatives
 
         public static bool operator !=(Maybe<T> left, Maybe<T> right) => !left.Equals(right);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is not Maybe<T> maybe)
                 return false;

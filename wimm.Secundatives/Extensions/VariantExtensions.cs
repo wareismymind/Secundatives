@@ -24,6 +24,10 @@ namespace wimm.Secundatives.Extensions
         /// contains a value of type <typeparamref name="U"/>
         /// </returns>
         public static W MapValue<T, U, W>(this Variant<T, U> variant, Func<T, W> tMapping, Func<U, W> uMapping)
+            where T : notnull
+            where U : notnull
+            where W : notnull
+
             => variant.Is<T>() ? tMapping(variant.Get<T>()) : uMapping(variant.Get<U>());
 
         /// <summary>
@@ -41,6 +45,8 @@ namespace wimm.Secundatives.Extensions
         /// is <typeparamref name="U"/>
         /// </param>
         public static void MapAction<T, U>(this Variant<T, U> variant, Action<T> tAction, Action<U> uAction)
+            where T : notnull
+            where U : notnull
         {
             if (variant.Is<T>())
                 tAction(variant.Get<T>());

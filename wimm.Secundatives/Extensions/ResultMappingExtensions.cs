@@ -26,6 +26,9 @@ namespace wimm.Secundatives
         /// if it exists. Otherwise returns a <see cref="Result{U, TError}"/> containing the <typeparamref name="TError"/> contained within 
         /// <paramref name="result"/></returns>
         public static Result<U, TError> Map<T, U, TError>(this Result<T, TError> result, Func<T, U> func)
+            where T : notnull
+            where U : notnull
+            where TError : notnull
         {
             if (result.IsValue)
                 return func(result.Value);
@@ -50,6 +53,9 @@ namespace wimm.Secundatives
         /// if it exists. Otherwise returns a <see cref="Result{U, TError}"/> containing the <typeparamref name="TError"/> contained within 
         /// <paramref name="result"/></returns>
         public static async Task<Result<U, TError>> Map<T, U, TError>(this Result<T, TError> result, Func<T, Task<U>> func)
+            where T : notnull
+            where U : notnull
+            where TError : notnull
         {
             if (result.IsValue)
                 return await func(result.Value);
@@ -72,6 +78,9 @@ namespace wimm.Secundatives
         /// <paramref name="result"/>if it exists. Otherwise returns a <see cref="Result{U, TError}"/> containing the 
         /// <typeparamref name="TError"/> contained within <paramref name="result"/></returns>
         public static async Task<Result<U, TError>> Map<T, U, TError>(this Task<Result<T, TError>> result, Func<T, U> func)
+            where T : notnull
+            where U : notnull
+            where TError : notnull
         {
             var val = await result;
             return val.Map(func);
@@ -93,6 +102,9 @@ namespace wimm.Secundatives
         /// obtained by awaiting <paramref name="result"/> if it exists. Otherwise returns a <see cref="Result{U, TError}"/> containing the
         /// <typeparamref name="TError"/> contained within  <paramref name="result"/></returns>
         public static async Task<Result<U, TError>> Map<T, U, TError>(this Task<Result<T, TError>> result, Func<T, Task<U>> func)
+            where T : notnull
+            where U : notnull
+            where TError : notnull
         {
 
             var res = await result;
@@ -116,6 +128,9 @@ namespace wimm.Secundatives
         /// if it exists. Otherwise returns a <see cref="Result{U, TError}"/> containing the <typeparamref name="TError"/> contained within 
         /// <paramref name="result"/></returns>
         public static async Task<Result<U, TError>> Map<T, U, TError>(this Result<T, TError> result, Func<T, Task<Result<U, TError>>> func)
+            where T : notnull
+            where U : notnull
+            where TError : notnull
         {
             if (result.IsValue)
                 return await func(result.Value);
@@ -140,6 +155,9 @@ namespace wimm.Secundatives
         /// if it exists. Otherwise returns a <see cref="Result{U, TError}"/> containing the <typeparamref name="TError"/> contained within 
         /// <paramref name="result"/></returns>
         public static async Task<Result<U, TError>> Map<T, U, TError>(this Task<Result<T, TError>> result, Func<T, Task<Result<U, TError>>> func)
+            where T : notnull
+            where U : notnull
+            where TError : notnull
         {
             var res = await result;
             if (res.IsValue)
@@ -164,6 +182,9 @@ namespace wimm.Secundatives
         /// <typeparamref name="TError"/> of <paramref name="result"/> if it exists. Otherwise returns a <see cref="Result{T, UError}"/> 
         /// containing the <typeparamref name="T"/> contained within <paramref name="result"/></returns>
         public static Result<T, UError> MapError<T, TError, UError>(this Result<T, TError> result, Func<TError, UError> func)
+            where T : notnull
+            where TError : notnull
+            where UError : notnull
         {
             if (result.IsError)
                 return func(result.Error);
@@ -187,6 +208,9 @@ namespace wimm.Secundatives
         /// <typeparamref name="TError"/> of <paramref name="result"/> if it exists. Otherwise returns a <see cref="Result{T, UError}"/> 
         /// containing the <typeparamref name="T"/> contained within <paramref name="result"/></returns>
         public static async Task<Result<T, UError>> MapError<T, TError, UError>(this Task<Result<T, TError>> result, Func<TError, UError> func)
+            where T : notnull
+            where TError : notnull
+            where UError : notnull
         {
             var val = await result;
             return val.MapError(func);
@@ -208,6 +232,9 @@ namespace wimm.Secundatives
         /// name="result"/> or by calling <paramref name="errorFunc"/> on the error from <paramref name="result"/>
         /// </returns>
         public static U MapOr<T, U, TError>(this Result<T, TError> result, Func<T, U> valueFunc, Func<TError, U> errorFunc)
+            where T : notnull
+            where U : notnull
+            where TError : notnull
         {
             return result.IsValue ? valueFunc(result.Value) : errorFunc(result.Error);
         }
@@ -228,6 +255,9 @@ namespace wimm.Secundatives
         /// name="result"/> or by calling <paramref name="errorFunc"/> on the error from <paramref name="result"/>
         /// </returns>
         public static async Task<U> MapOr<T, U, TError>(this Task<Result<T, TError>> result, Func<T, U> valueFunc, Func<TError, U> errorFunc)
+            where T : notnull
+            where U : notnull
+            where TError : notnull
         {
             var res = await result;
             return res.IsValue ? valueFunc(res.Value) : errorFunc(res.Error);

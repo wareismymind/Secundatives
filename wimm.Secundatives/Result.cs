@@ -9,6 +9,8 @@ namespace wimm.Secundatives
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TError"></typeparam>
     public class Result<T, TError> : Variant<T, TError>
+        where T : notnull
+        where TError : notnull
     {
         /// <summary> A value indicating whether the operation resulted in an error type </summary>
         public bool IsError => Is<TError>();
@@ -57,6 +59,7 @@ namespace wimm.Secundatives
     /// </summary>
     /// <typeparam name="T"> The type to be returned on success </typeparam>
     public class Result<T> : Result<T, Error>
+        where T : notnull
     {
 
         /// <summary>

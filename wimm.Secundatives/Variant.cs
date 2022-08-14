@@ -6,7 +6,9 @@ namespace wimm.Secundatives
     /// <summary>
     /// A typesafe union that contains either a <typeparamref name="T"/> or a <typeparamref name="U"/>
     /// </summary>
-    public class Variant<T, U>
+    public class Variant<T, U> 
+        where T : notnull
+        where U : notnull
     {
         /// <summary>
         /// Ensures that <typeparamref name="U"/> and <typeparamref name="T"/> are not within the same

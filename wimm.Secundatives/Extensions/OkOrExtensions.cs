@@ -23,6 +23,8 @@ namespace wimm.Secundatives
         /// contains the result of executing <paramref name="func"/>
         /// </returns>
         public static Result<T, TError> OkOr<T, TError>(this Maybe<T> value, Func<TError> func)
+            where T : notnull
+            where TError : notnull
         {
             if (value.Exists)
                 return value.Value;
@@ -43,6 +45,8 @@ namespace wimm.Secundatives
         /// contains <paramref name="error"/>
         /// </returns>
         public static Result<T, TError> OkOr<T, TError>(this Maybe<T> value, TError error)
+            where T : notnull
+            where TError : notnull
         {
             if (value.Exists)
                 return value.Value;
@@ -63,6 +67,8 @@ namespace wimm.Secundatives
         /// contains <paramref name="error"/>
         /// </returns>
         public static async Task<Result<T, TError>> OkOr<T, TError>(this Task<Maybe<T>> value, TError error)
+            where T : notnull
+            where TError : notnull
         {
             var v = await value;
             return v.OkOr(error);
@@ -81,6 +87,8 @@ namespace wimm.Secundatives
         /// contains the result of executing <paramref name="func"/>
         /// </returns>
         public static async Task<Result<T, TError>> OkOr<T, TError>(this Task<Maybe<T>> value, Func<TError> func)
+            where T : notnull
+            where TError : notnull
         {
             var v = await value;
             return v.OkOr(func);
@@ -99,6 +107,8 @@ namespace wimm.Secundatives
         /// <returns> A <see cref="Result{T, TError}"/> either contained by <paramref name="value"/> if it exists or created
         /// from <paramref name="error"/> if it is None</returns>
         public static async Task<Result<T, TError>> OkOr<T, TError>(this Task<Maybe<Result<T, TError>>> value, TError error)
+            where T : notnull
+            where TError : notnull
         {
             var res = await value;
             return res.UnwrapOr(error);
@@ -116,6 +126,8 @@ namespace wimm.Secundatives
         /// <returns> A <see cref="Result{T, TError}"/> either contained by <paramref name="value"/> if it exists or created
         /// from the results of calling <paramref name="func"/> if it is None</returns>
         public static async Task<Result<T, TError>> OkOr<T, TError>(this Task<Maybe<Result<T, TError>>> value, Func<TError> func)
+            where T : notnull
+            where TError : notnull
         {
             var res = await value;
             return res.UnwrapOr(func());
