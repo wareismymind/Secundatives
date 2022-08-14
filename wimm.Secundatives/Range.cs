@@ -26,8 +26,8 @@ namespace wimm.Secundatives
         /// </exception>
         public Range(T min, T max)
         {
-            Min = Require(min, nameof(min));
-            Max = Require(max, nameof(max));
+            Min = Range<T>.Require(min, nameof(min));
+            Max = Range<T>.Require(max, nameof(max));
 
             if (max.CompareTo(min) < 0)
                 throw new ArgumentException(
@@ -41,14 +41,15 @@ namespace wimm.Secundatives
         /// <returns> <c>true</c> if <paramref name="value"/> is greater than <see cref="Max"/> and less than <see cref="Max"/> </returns>
         public bool Includes(T value)
         {
-            Require(value, nameof(value));
+            Range<T>.Require(value, nameof(value));
 
             return !(Min.CompareTo(value) > 0 || Max.CompareTo(value) < 0);
         }
 
-        private T Require(T value, string name)
+        private static T Require(T value, string name)
         {
-            if (value == null) throw new ArgumentNullException(name);
+            if (value == null) 
+                throw new ArgumentNullException(name);
             return value;
         }
     }

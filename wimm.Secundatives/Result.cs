@@ -16,7 +16,6 @@ namespace wimm.Secundatives
         /// <summary> A value indicating if the operation successfully returned a value </summary>
         public bool IsValue => Is<T>();
 
-
         /// <summary> Gets the value contained in the result. </summary>
         /// <exception cref="InvalidOperationException"> The result contains no value - operation failed </exception>
         public T Value => Get<T>();
@@ -47,12 +46,10 @@ namespace wimm.Secundatives
 
         //CN(justification): These operators are trivial and their documentation would just be code bloat
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static implicit operator Result<T, TError>(T value) => new Result<T, TError>(value);
-        public static implicit operator Result<T, TError>(TError error) => new Result<T, TError>(error);
+        public static implicit operator Result<T, TError>(T value) => new(value);
+        public static implicit operator Result<T, TError>(TError error) => new(error);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
-
-
 
     /// <summary>
     /// A basic Result class that handles operations with a possibility of failure that uses a special error class to 
@@ -78,9 +75,8 @@ namespace wimm.Secundatives
 
         //CN(justification): These operators are trivial and their documentation would just be code bloat
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static implicit operator Result<T>(T value) => new Result<T>(value);
-        public static implicit operator Result<T>(Error error) => new Result<T>(error);
+        public static implicit operator Result<T>(T value) => new(value);
+        public static implicit operator Result<T>(Error error) => new(error);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
-
 }

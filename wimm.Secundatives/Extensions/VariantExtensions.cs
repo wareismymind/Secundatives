@@ -26,7 +26,6 @@ namespace wimm.Secundatives.Extensions
         public static W MapValue<T, U, W>(this Variant<T, U> variant, Func<T, W> tMapping, Func<U, W> uMapping)
             => variant.Is<T>() ? tMapping(variant.Get<T>()) : uMapping(variant.Get<U>());
 
-
         /// <summary>
         /// Maps the contents of a variant to an action taking that type. Executes the function matching the type of the value
         /// </summary>

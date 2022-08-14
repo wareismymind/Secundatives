@@ -30,7 +30,6 @@ namespace wimm.Secundatives
             return func();
         }
 
-
         /// <summary>
         /// Maps a <see cref="Maybe{T}"/> into a <see cref="Result{T, TError}"/> by returning a default value <paramref name="error"/> if
         /// <paramref name="value"/> is None. In the case where <paramref name="value"/> contains a value returns a <see cref="Result{T, TError}"/>
@@ -51,7 +50,6 @@ namespace wimm.Secundatives
             return error;
         }
 
-
         /// <summary>
         /// Maps a <see cref="Task{T}"/> containing a <see cref="Maybe{T}"/> into a <see cref="Result{T, TError}"/> by returning a default value <paramref name="error"/> if
         /// <paramref name="value"/> is None. In the case where <paramref name="value"/> contains a value returns a <see cref="Result{T, TError}"/>
@@ -69,7 +67,6 @@ namespace wimm.Secundatives
             var v = await value;
             return v.OkOr(error);
         }
-
 
         /// <summary>
         /// Maps a <see cref="Task{T}"/> containing a <see cref="Maybe{T}"/> into a <see cref="Result{T, TError}"/> by executing <paramref name="func"/> if
@@ -90,7 +87,6 @@ namespace wimm.Secundatives
 
         }
 
-
         /// <summary>
         /// Collapsing mapping of a  <see cref="Task{T}"/> containing a <see cref="Maybe{T}"/> that may hold a <see cref="Result{T,TErr}"/>
         /// into a <see cref="Result{T, TError}"/> 
@@ -107,7 +103,6 @@ namespace wimm.Secundatives
             var res = await value;
             return res.UnwrapOr(error);
         }
-
 
         /// <summary>
         /// Collapsing mapping of a  <see cref="Task{T}"/> containing a <see cref="Maybe{T}"/> that may hold a <see cref="Result{T,TErr}"/>

@@ -25,7 +25,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(TestingEnum.BadThingsHappened, result.Error);
         }
 
-
         [Fact]
         public void OkOrErrorValue_Value_ReturnsResultWithValue()
         {
@@ -46,7 +45,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(TestingEnum.BadThingsHappened, result.Error);
         }
 
-
         [Fact]
         public async Task OkOrErrorTaskFunc_Value_ReturnsResultWithValue()
         {
@@ -55,7 +53,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
 
             Assert.Equal("doot", result.Value);
         }
-
 
         [Fact]
         public async Task OkOrErrorTaskFunc_None_ReturnsResultWithValue()
@@ -66,7 +63,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(TestingEnum.BadThingsHappened, result.Error);
 
         }
-
 
         [Fact]
         public async Task OkOrErrorTaskValue_Value_ReturnsResultWithValue()
@@ -123,12 +119,9 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(TestingEnum.BadThingsHappened, result.Error);
         }
 
-
         public enum TestingEnum
         {
             BadThingsHappened
         }
-
-
     }
 }

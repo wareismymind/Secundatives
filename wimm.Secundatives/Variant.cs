@@ -41,7 +41,7 @@ namespace wimm.Secundatives
         {
             var wType = typeof(W);
 
-            if (!IsAssignableFromMemberType(wType))
+            if (!Variant<T, U>.IsAssignableFromMemberType(wType))
                 throw UnsupportedType(wType, new List<Type> { typeof(T), typeof(U) });
 
             return _value is W;
@@ -80,12 +80,11 @@ namespace wimm.Secundatives
 
         //CN(justification): These operators are trivial and their documentation would just be code bloat
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static implicit operator Variant<T, U>(T val) => new Variant<T, U>(val);
-        public static implicit operator Variant<T, U>(U val) => new Variant<T, U>(val);
+        public static implicit operator Variant<T, U>(T val) => new(val);
+        public static implicit operator Variant<T, U>(U val) => new(val);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-
-        private bool IsAssignableFromMemberType(Type type)
+        private static bool IsAssignableFromMemberType(Type type)
         {
             return typeof(U).IsAssignableFrom(type) || typeof(T).IsAssignableFrom(type);
         }
@@ -101,10 +100,5 @@ namespace wimm.Secundatives
             return new NotSupportedException(
                 $"Variant was checked for type it cannot contain:\nRequested:{expected}\nAvailable: {string.Join("\n", available)}");
         }
-
-
-
     }
-
-
 }

@@ -11,7 +11,6 @@ namespace wimm.Secundatives
         private const string _outOfRangeMessage = "Must be greater than or equal to zero.";
         private readonly Range<int> _range;
 
-
         /// <summary>
         /// <see cref="Range{T}.Max"/>
         /// </summary>
@@ -41,8 +40,10 @@ namespace wimm.Secundatives
         /// </exception>
         public NaturalRange(int min, int max)
         {
-            if (min < 0) throw new ArgumentOutOfRangeException(nameof(min), _outOfRangeMessage);
-            if (max < 0) throw new ArgumentOutOfRangeException(nameof(max), _outOfRangeMessage);
+            if (min < 0) 
+                throw new ArgumentOutOfRangeException(nameof(min), _outOfRangeMessage);
+            if (max < 0) 
+                throw new ArgumentOutOfRangeException(nameof(max), _outOfRangeMessage);
 
             if (max < min)
                 throw new ArgumentException(

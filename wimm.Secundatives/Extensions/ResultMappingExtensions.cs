@@ -33,7 +33,6 @@ namespace wimm.Secundatives
             return result.Error;
         }
 
-
         /// <summary>
         /// Transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying an async  function if the mapped
         /// <see cref="Result{T, TError}"/> contains a value otherwise by constructing a new <see cref="Result{U, TError}"/> from the 
@@ -78,7 +77,6 @@ namespace wimm.Secundatives
             return val.Map(func);
         }
 
-
         /// <summary>
         /// Asynchronously transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying an async function and collapsing
         /// the result if the mapped  <see cref="Result{T, TError}"/> contains a value otherwise by constructing a new 
@@ -100,7 +98,6 @@ namespace wimm.Secundatives
             var res = await result;
             return await res.Map(func);
         }
-
 
         /// <summary>
         /// Asynchronously transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying an async function and collapsing
@@ -125,7 +122,6 @@ namespace wimm.Secundatives
 
             return result.Error;
         }
-
 
         /// <summary>
         /// Asynchronously transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{U, TError}"/> by applying an async function and collapsing
@@ -152,7 +148,6 @@ namespace wimm.Secundatives
             return res.Error;
         }
 
-
         /// <summary>
         /// Transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{T, UError}"/> by applying a function if the mapped 
         /// <see cref="Result{T, TError}"/> contains a <typeparamref name="UError"/>. Otherwise constructs a new 
@@ -175,7 +170,6 @@ namespace wimm.Secundatives
 
             return result.Value;
         }
-
 
         /// <summary>
         /// Asynchronously transforms a <see cref="Result{T, TError}"/> into a <see cref="Result{T, UError}"/> by applying a function if the mapped 

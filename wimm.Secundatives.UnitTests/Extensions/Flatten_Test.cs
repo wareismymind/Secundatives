@@ -27,7 +27,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(value, res.Value);
         }
 
-
         [Fact]
         public void Flatten_InnerExistsAndIsError_ReturnsError()
         {

@@ -55,7 +55,6 @@ namespace wimm.Secundatives.UnitTests.Extensions
             Assert.Equal(Maybe<string>.None, res);
         }
 
-
         [Fact]
         public async Task AsMaybeTaskClass_Value_ReturnsSome()
         {
@@ -85,7 +84,5 @@ namespace wimm.Secundatives.UnitTests.Extensions
 
             Assert.Equal(25, res.Value);
         }
-
-
     }
 }

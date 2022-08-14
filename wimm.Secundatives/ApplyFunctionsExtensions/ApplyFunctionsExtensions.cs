@@ -28,8 +28,10 @@ namespace wimm.Secundatives.ApplyFunctionsExtensions
         /// </exception>
         public static TFunc Apply<TArg, TFunc>(this TArg target, Func<TArg, TFunc> fn, bool allowNull = false)
         {
-            if (target == null && !allowNull) throw new ArgumentNullException(nameof(target));
-            if (fn == null) throw new ArgumentNullException(nameof(fn));
+            if (target == null && !allowNull)
+                throw new ArgumentNullException(nameof(target));
+            if (fn == null)
+                throw new ArgumentNullException(nameof(fn));
             return fn(target);
         }
 
@@ -53,8 +55,10 @@ namespace wimm.Secundatives.ApplyFunctionsExtensions
         /// </exception>
         public static bool In<T>(this T target, IEnumerable<T> enumerable, bool allowNull = false)
         {
-            if (target == null && !allowNull) throw new ArgumentNullException(nameof(target));
-            if (enumerable == null) throw new ArgumentNullException(nameof(enumerable));
+            if (target == null && !allowNull)
+                throw new ArgumentNullException(nameof(target));
+            if (enumerable == null)
+                throw new ArgumentNullException(nameof(enumerable));
             return enumerable.Contains(target, EqualityComparer<T>.Default);
         }
     }
